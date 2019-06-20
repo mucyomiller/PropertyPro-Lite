@@ -40,7 +40,7 @@ header {
   grid-area: header;
 }
 
-header > img {
+header>img {
   width: 30px;
   height: 30px;
 }
@@ -53,7 +53,7 @@ nav {
   float: right;
 }
 
-nav > a {
+nav>a {
   text-decoration: none;
   color: white;
   margin-left: 10px;
@@ -63,6 +63,49 @@ nav > a {
 aside {
   grid-area: aside;
   padding: 5px;
+}
+
+aside>section {
+  background-color: #fff;
+  box-shadow: 0 0 4px 0 rgba(185, 185, 185, 0.897);
+  border-radius: 12px;
+  height: 80vh;
+}
+
+aside>section>h2 {
+  font-size: 15px;
+  border-radius: 12px 12px 0 0;
+  text-align: center;
+  color: var(--main-text-color);
+  padding: 12px;
+  background-color: var(--color-primary);
+}
+
+aside>section>div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+aside>section>div>p {
+  margin-bottom: 1rem;
+}
+
+aside>section>div>p>label {
+  text-transform: capitalize;
+}
+
+select {
+  display: block;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: var(--color-primary);
+  line-height: 1.3;
+  width: 100%;
+  max-width: 100%;
+  border: 1px solid var(--color-primary);
+  border-radius: 12px;
 }
 
 /* main section */
@@ -82,7 +125,7 @@ footer {
   padding: 2rem;
 }
 
-footer > p {
+footer>p {
   display: flex;
   justify-content: center;
 }
@@ -134,6 +177,7 @@ footer > p {
   height: 100%;
   background-color: var(--color-secondary);
 }
+
 .card .card-content .card-item {
   display: flex;
   flex-direction: row;
@@ -180,7 +224,7 @@ footer > p {
     grid-gap: 5px;
   }
 
-  aside > section {
+  aside>section {
     height: min-content;
   }
 }
