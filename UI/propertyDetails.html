@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>PropertyPro Lite</title>
+    <link rel="shortcut icon" href="asset/images/logo.png" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html"><img src="asset/images/logo.svg" alt="property website logo" /></a>
+        <nav>
+            <a href="#">Login</a>
+            <a href="#">Sign Up</a>
+        </nav>
+    </header>
+    <main class="detail-main">
+        <div class="single-property">
+            <div class="detail-header">
+                <h1>House For Buy In Kimironko</h1>
+            </div>
+            <div class="featured">
+                <img src="asset/images/apartment1.jpg" class="carousel-img is-rounded" onclick="nextCarousel()" />
+                <img src="asset/images/apartment2.jpg" class="carousel-img is-rounded" onclick="nextCarousel()" />
+                <img src="asset/images/apartment5.jpeg" class="carousel-img is-rounded" onclick="nextCarousel()" />
+                <img src="asset/images/apartment6.jpeg" class="carousel-img is-rounded" onclick="nextCarousel()" />
+                <img src="asset/images/apartment2.jpg" class="carousel-img is-rounded" onclick="nextCarousel()" />
+            </div>
+            <div class="detail-details">
+                <section class="prices">
+                    <span class="price">
+                        <span>2,000,000</span>
+                        <span>RWF</span>
+                    </span>
+                    <div class="price-details" role="details">
+                        <div class="detail-item"><label>Status</label><span>Available</span></div>
+                        <div class="detail-item"><label>Type</label><span>Single Family Home</span></div>
+                        <div class="detail-item"><label>State</label><span>Rwanda</span></div>
+                        <div class="detail-item"><label>City</label><span>Kigali</span></div>
+                        <div class="detail-item"><label>Address</label><span>KN 1 Ave</span></div>
+                    </div>
+                </section>
+                <section class="actions">
+                </section>
+            </div>
+            <div class="detail-carousel" role="thumbnails">
+                <i class="material-icons white" onclick="prevCarousel()">chevron_left</i>
+                <img src="asset/images/apartment1.jpg" class="carousel-thumbnail-img" onclick="carousel(1)" />
+                <img src="asset/images/apartment2.jpg" class="carousel-thumbnail-img" onclick="carousel(2)" />
+                <img src="asset/images/apartment5.jpeg" class="carousel-thumbnail-img" onclick="carousel(3)" />
+                <img src="asset/images/apartment6.jpeg" class="carousel-thumbnail-img" onclick="carousel(4)" />
+                <img src="asset/images/apartment2.jpg" class="carousel-thumbnail-img" onclick="carousel(5)" />
+                <i class="material-icons white" onclick="nextCarousel()">chevron_right</i>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2019 All Right Reserved to PropertyPro-Lite</p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
