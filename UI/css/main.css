@@ -29,7 +29,8 @@
 }
 
 /* header section */
-.header {
+.header,
+.agent-header {
   position: fixed;
   top: 0;
   left: 0;
@@ -38,6 +39,73 @@
   background-color: var(--color-primary);
   padding: 0.5rem;
   grid-area: header;
+}
+
+.pull-right {
+  float: right;
+}
+
+/* .logo-main {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+} */
+
+.agent-header ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+li {
+  float: left;
+  margin-right: 5px;
+}
+
+li a,
+li span {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.select-prop-types {
+  height: 2.5rem;
+}
+
+.agent-header img {
+  height: 1.2rem;
+  width: auto;
+}
+
+li .logo:hover {
+  background: none;
+}
+
+.actions {
+  display: grid;
+  padding: 10px;
+  grid-template-columns: 1;
+  grid-gap: 1rem;
+}
+
+.actions .btn-action {
+  border: none;
+  color: white;
+  align-items: center;
+  width: 100%;
+  font-size: 15px;
+  padding: 2%;
+  background-color: var(--color-primary);
+  border-radius: 5px;
+}
+
+.small-icon {
+  font-size: 2rem;
 }
 
 .header img {
@@ -49,15 +117,17 @@
   float: left;
 }
 
-nav {
+.nav {
   float: right;
 }
 
-nav > a {
+.nav a {
   text-decoration: none;
   color: white;
   margin-left: 10px;
 }
+
+.agent-header {}
 
 /* aside section */
 .aside {
@@ -65,14 +135,14 @@ nav > a {
   padding: 5px;
 }
 
-.aside > section {
+.aside>section {
   background-color: #fff;
   box-shadow: 0 0 4px 0 rgba(185, 185, 185, 0.897);
   border-radius: 12px;
   height: 80vh;
 }
 
-.aside > section > h2 {
+.aside>section>h2 {
   font-size: 15px;
   border-radius: 12px 12px 0 0;
   text-align: center;
@@ -81,18 +151,18 @@ nav > a {
   background-color: var(--color-primary);
 }
 
-.aside > section > div {
+.aside>section>div {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 20px;
 }
 
-.aside > section > div > p {
+.aside>section>div>p {
   margin-bottom: 1rem;
 }
 
-.aside > section > div > p > label {
+.aside>section>div>p>label {
   text-transform: capitalize;
 }
 
@@ -117,6 +187,14 @@ select {
   grid-gap: 0.5rem;
 }
 
+.agent-main {
+  grid-area: main;
+  display: grid;
+  padding: 5px;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-gap: 0.5rem;
+}
+
 /* footer section */
 .footer {
   grid-area: footer;
@@ -125,7 +203,7 @@ select {
   padding: 2rem;
 }
 
-.footer > p {
+.footer>p {
   display: flex;
   justify-content: center;
 }
@@ -204,6 +282,7 @@ select {
 /* details page section */
 .detail-main {
   display: flex;
+  min-height: 95vh;
   justify-content: center;
 }
 
@@ -228,6 +307,7 @@ select {
   grid-area: dheader;
   margin-bottom: 1.2rem;
 }
+
 .detail-header h1 {
   font-size: 1.2rem;
 }
@@ -340,6 +420,7 @@ select {
   .homepage {
     grid-template-columns: 10rem 1fr;
   }
+
   /* handling details page on tablets */
   .single-property {
     width: 100%;
@@ -354,9 +435,11 @@ select {
   .detail-details {
     margin-bottom: 0.5rem;
   }
+
   .detail-details .prices {
     margin: 0;
   }
+
   .detail-header h1 {
     text-align: center;
   }
@@ -376,6 +459,30 @@ select {
   }
 }
 
+.managepage {
+  font-family: "Roboto",
+    sans-serif;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 4rem 1fr 4rem;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-gap: 5px;
+  background-color: var(--main-content-bg);
+}
+
+.managepage .material-icons {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.web-name {
+  color: #fff;
+}
+
 /* phones  */
 @media only screen and (max-width: 414px) {
   .homepage {
@@ -392,9 +499,10 @@ select {
     margin-top: 4rem;
   }
 
-  .aside > section {
+  .aside>section {
     height: min-content;
   }
+
   /* handling details page on phone */
   .single-property {
     width: 100%;
@@ -405,15 +513,19 @@ select {
       "featured"
       "carousel";
   }
+
   .detail-details {
     margin-bottom: 0.5rem;
   }
+
   .detail-details .prices {
     margin: 0;
   }
+
   .detail-header h1 {
     text-align: center;
   }
+
   .prices .price {
     font-size: 1rem;
     padding: 5px;
@@ -423,6 +535,7 @@ select {
     justify-content: center;
     align-items: center;
   }
+
   .detail-carousel {
     display: none;
   }
