@@ -13,9 +13,12 @@
   --main-content-bg: #fafafa;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 /* homepage section */
 .homepage {
-  font-family: "Roboto", sans-serif;
   height: 100vh;
   display: grid;
   grid-template-columns: 15rem 1fr;
@@ -93,7 +96,7 @@ li .logo:hover {
   grid-gap: 1rem;
 }
 
-.actions .btn-action {
+.btn-action {
   border: none;
   color: white;
   align-items: center;
@@ -127,7 +130,61 @@ li .logo:hover {
   margin-left: 10px;
 }
 
-.agent-header {}
+/* .agent-header {} */
+.v-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.f-centered {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: linear-gradient(-135deg, #d3d3d3, var(--color-primary));
+}
+
+.f-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas:
+    "f-logo"
+    "v-form";
+  background-color: #fff;
+  width: 80%;
+  padding: 1rem;
+}
+
+.f-title {
+  font-size: 2rem;
+}
+
+.f-container form input {
+  padding: 0.8rem;
+  margin: 0.5rem 0;
+}
+
+.f-container form p {
+  margin-top: 1rem;
+}
+
+.f-container form a {
+  text-decoration: none;
+}
+
+.f-container form p a {
+  color: grey;
+}
+
+.is-centered {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 
 /* aside section */
 .aside {
@@ -457,11 +514,15 @@ select {
   .detail-carousel {
     display: none;
   }
+
+  .f-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-height: 100vh;
+  }
 }
 
 .managepage {
-  font-family: "Roboto",
-    sans-serif;
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
@@ -538,5 +599,11 @@ select {
 
   .detail-carousel {
     display: none;
+  }
+
+  .f-container {
+    grid-template-columns: 1fr;
+    width: 100%;
+    min-height: 100vh;
   }
 }
