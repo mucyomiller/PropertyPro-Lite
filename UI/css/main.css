@@ -179,6 +179,11 @@ li .logo:hover {
   color: grey;
 }
 
+.f-padding {
+  height: 2.2rem;
+  margin-bottom: 1em;
+}
+
 .is-centered {
   display: flex;
   flex-direction: row;
