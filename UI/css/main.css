@@ -97,6 +97,7 @@ li .logo:hover {
 }
 
 .btn-action {
+  cursor: pointer;
   border: none;
   color: white;
   align-items: center;
