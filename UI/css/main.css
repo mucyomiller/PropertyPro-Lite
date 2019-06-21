@@ -185,6 +185,17 @@ li .logo:hover {
   margin-bottom: 1em;
 }
 
+.f-padding-on {
+  padding: 0.5rem;
+  margin-bottom: 1em;
+}
+
+.advert-main .ads-card h3 {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .is-centered {
   display: flex;
   flex-direction: row;
@@ -250,12 +261,23 @@ select {
   grid-gap: 0.5rem;
 }
 
-.agent-main {
+.agent-main,
+.advert-main {
   grid-area: main;
   display: grid;
   padding: 5px;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
   grid-gap: 0.5rem;
+}
+
+.advert-main {
+  grid-template-columns: 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.advert-main .ads-card {
+  width: 60%;
 }
 
 /* footer section */
@@ -272,7 +294,8 @@ select {
 }
 
 /* card section */
-.card {
+.card,
+.ads-card {
   display: flex;
   background-color: var(--color-secondary);
   border-radius: 12px;
@@ -281,6 +304,16 @@ select {
   cursor: pointer;
   position: relative;
   box-shadow: 0 2px 2px 0 rgba(185, 185, 185, 0.897);
+}
+
+.ads-card {
+  grid-template-columns: 1fr;
+  background-color: #fff;
+  padding: 1rem;
+}
+
+.ads-card input {
+  padding: 0.5rem;
 }
 
 .card .featured {
@@ -526,6 +559,10 @@ select {
     width: 100%;
     min-height: 100vh;
   }
+
+  .advert-main .ads-card {
+    width: 100%;
+  }
 }
 
 .managepage {
@@ -611,5 +648,9 @@ select {
     grid-template-columns: 1fr;
     width: 100%;
     min-height: 100vh;
+  }
+
+  .advert-main .ads-card {
+    width: 100%;
   }
 }

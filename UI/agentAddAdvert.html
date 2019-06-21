@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Post An Advert</title>
+    <link rel="shortcut icon" href="asset/images/logo.png">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body class="managepage">
+    <header class="agent-header">
+        <ul>
+            <li><a class="logo" href="index.html"><img src="asset/images/logo.svg" alt="property website logo" /></a>
+            </li>
+            <li><span>PropertyPro-Lite</span></li>
+            <li class="pull-right">
+                <a href="index.html"><i class="material-icons md-36">lock</i>Sign Out</a>
+            </li>
+            <li class="pull-right">
+                <a href="agentManageAds.html">My Adverts</a>
+            </li>
+        </ul>
+    </header>
+    <main class="advert-main">
+        <div class="ads-card">
+            <h3>Adds An Advert</h3>
+            <form class="v-form" action="#">
+                <label for="name">Name</label>
+                <input type="text" name="propName" id="" required="">
+                <label for="price">Price in Rwf</label>
+                <input type="text" name="propPrice" id="" required="">
+                <label for="state">State</label>
+                <input type="text" name="propState" id="" required="">
+                <label for="city">City</label>
+                <input type="text" name="propCity" id="" required="">
+                <label for="address">Address</label>
+                <input type="text" name="propAddress" id="" required="">
+                <label for="pictures">Add picures</label>
+                <input type="file" name="propImage" id="" required="">
+                <select name="propertyType" class="select f-padding">
+                    <option value="multi_family_home">Multi Family Home</option>
+                    <option value="single_family_home">Single Family Home</option>
+                    <option value="loft">Loft</option>
+                    <option value="apartment">Apartment</option>
+                    <option value="condo">Condo</option>
+                    <option value="town_house">Townhouse</option>
+                    <option value="lot">Lot</option>
+                    <option value="farm">Farm</option>
+                    <option value="villa">Villa</option>
+                </select>
+                <select name="bedrooms" class="select f-padding">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                </select>
+                <textarea name="propDescription" class="is-rounded f-padding-on" rows="5"
+                    placeholder="Describe your property..."></textarea>
+                <button class="btn-action">Post Advert</button>
+            </form>
+        </div>
+    </main>
+    <footer class="footer">
+        <p> &copy; 2019 All Right Reserved to PropertyPro-Lite </p>
+    </footer>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
