@@ -52,6 +52,9 @@
                     <button class="btn-action">Contact seller <i class="fas fa-phone"></i></button>
                     <button class="btn-action">Report as fraudulent <i class="fas fa-ban"></i></button>
                 </section>
+                <section class="gmap">
+                    <div id="map"></div>
+                </section>
             </div>
             <div class="detail-carousel" role="thumbnails">
                 <i class="material-icons white" onclick="prevCarousel()">chevron_left</i>
@@ -68,6 +71,31 @@
         <p>&copy; 2019 All Right Reserved to PropertyPro-Lite</p>
     </footer>
     <script src="js/main.js"></script>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of kimiroko
+            // TODO: in future release load location dymanically depending on selected advert
+            var kimiroko = {
+                lat: -1.937483,
+                lng: 30.131377
+            };
+            // The map, centered at kimiroko
+            var map = new google.maps.Map(
+                document.getElementById('map'), {
+                    zoom: 13,
+                    center: kimiroko
+                });
+            // The marker, positioned at kimiroko
+            var marker = new google.maps.Marker({
+                position: kimiroko,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC1FjcV_b8kzMTAUELO9jvtTykrj_WZzUI&callback=initMap">
+    </script>
 </body>
 
 </html>
