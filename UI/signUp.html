@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="sign up for helping user to create an account" />
+    <title>Sign Up</title>
+    <link rel="shortcut icon" href="asset/images/logo.png">
+    <link rel="stylesheet" href="css/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+</head>
+
+<body>
+    <main class="f-centered ">
+        <div class="f-container is-rounded">
+            <div class="f-logo">
+                <img src="asset/images/logo_black.svg" />
+            </div>
+            <form class="v-form" method="POST">
+                <header>
+                    <h3 class="f-title">Property-Pro Lite</h3>
+                </header>
+                <label for="email">Email</label>
+                <input type="email" name="email" required>
+                <label for="firstname">Firstname</label>
+                <input type="text" name="firstname" required>
+                <label for="lastname">Lastname</label>
+                <input type="text" name="lastname" required>
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" name="phoneNumber">
+                <label for="address">Address</label>
+                <input type="text" name="address" required>
+                <label for="username">Username</label>
+                <input type="text" name="username" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" required>
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" name="confirmPassword" required>
+                <select name="user_type" class="select f-padding">
+                    <option value="" selected disabled="">Select user type</option>
+                    <option value="admin">Agent</option>
+                    <option value="user">User</option>
+                </select>
+                <a class="btn-action is-centered" name="login" href="agentManageAds.html">Create account</a>
+                <p>Already have an account? <a href="signIn.html"><i class="fas fa-sign-in-alt"></i>Sign in</a> </p>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
