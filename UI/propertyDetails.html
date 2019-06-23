@@ -86,10 +86,18 @@
                     zoom: 13,
                     center: kimiroko
                 });
+            //custom maker icon (red flag)
+            var icon = {
+                url: "asset/images/redflag.svg",
+                scaledSize: new google.maps.Size(50, 50),
+                origin: new google.maps.Point(0, 0), // origin
+                anchor: new google.maps.Point(0, 0) // anchor
+            };
             // The marker, positioned at kimiroko
             var marker = new google.maps.Marker({
                 position: kimiroko,
-                map: map
+                map: map,
+                icon: icon
             });
         }
     </script>
