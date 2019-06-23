@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="homepage for viewing all listed property adverts" />
     <title>PropertyPro Lite</title>
     <link rel="shortcut icon" href="asset/images/logo.png">
+    <link rel="stylesheet" href="css/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body class="homepage">
@@ -25,8 +26,8 @@
             <h2>Filters </h2>
             <div>
                 <p>
-                    <label>Per Types of Property:</label>
-                    <select name='prop_types'>
+                    <label for="prop_types">Per Types of Property:</label>
+                    <select name='prop_types' id="prop_types">
                         <option value="multi_family_home">Multi Family Home</option>
                         <option value="single_family_home">Single Family Home</option>
                         <option value="loft">Loft</option>
@@ -39,8 +40,8 @@
                     </select>
                 </p>
                 <p>
-                    <label>Per Number of Bedrooms:</label>
-                    <select name='num_of_beds'>
+                    <label for="num_of_beds">Per Number of Bedrooms:</label>
+                    <select name='num_of_beds' id="num_of_beds">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -55,8 +56,8 @@
                 </p>
 
                 <p>
-                    <label>Per City:</label>
-                    <select name='location'>
+                    <label for="location">Per City:</label>
+                    <select name='location' id="location">
                         <option value="kicukiro">Kicukiro</option>
                         <option value="nyarugenge">Nyarugenge</option>
                         <option value="gasabo">Gasabo</option>
@@ -70,7 +71,7 @@
     <footer class="footer">
         <p> &copy; 2019 All Right Reserved to PropertyPro-Lite </p>
     </footer>
-    <script src="js/main.js"></script>
+    <script src="js/main.js" defer></script>
 </body>
 
 </html>
