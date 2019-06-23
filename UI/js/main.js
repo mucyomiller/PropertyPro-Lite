@@ -70,7 +70,7 @@ window.onload = () => {
         property += `
                 <div class="card">
                     <div class="featured" onclick="window.location='propertyDetails.html'">
-                        <img src="asset/images/${prop.image_url}" />
+                        <img src="asset/images/${prop.image_url}" alt="property image"/>
                     </div>
                     <div class="card-content">
                         <div class="card-item">
@@ -118,7 +118,7 @@ window.onload = () => {
             el.classList.remove('selected');
         });
 
-        if (img[_carousel_index - 1].style.display != "block") {
+        if (typeof img[_carousel_index - 1] != "undefined" && img[_carousel_index - 1].style.display != "block") {
             img[_carousel_index - 1].style.display = "block";
             if (typeof thumbnails[_carousel_index - 1] != "undefined") {
                 thumbnails[_carousel_index - 1].classList.add('selected');
