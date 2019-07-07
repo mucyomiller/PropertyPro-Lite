@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node server/index.js",
     "build": "mkdir dist && babel server -s -d dist",
-    "test": "nyc --reporter=html --reporter=text mocha server/test/*.js --require @babel/register --exit",
+    "test": "nyc --reporter=html --reporter=text mocha server/**/*.js --require @babel/register --exit",
     "lint": "eslint server -c .eslintrc --ext js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -21,10 +21,12 @@
   },
   "homepage": "https://github.com/mucyomiller/PropertyPro-Lite#readme",
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "cloudinary": "^1.14.0",
     "connect-multiparty": "^2.2.0",
     "dotenv": "^8.0.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
