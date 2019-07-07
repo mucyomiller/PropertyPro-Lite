@@ -69,7 +69,7 @@ window.onload = () => {
     for (let prop of datas) {
         property += `
                 <div class="card">
-                    <div class="featured" onclick="window.location='propertyDetails.html'">
+                    <div class="featured" onclick="window.location='html/propertyDetails.html'">
                         <img src="asset/images/${prop.image_url}" alt="property image"/>
                     </div>
                     <div class="card-content">
@@ -84,7 +84,7 @@ window.onload = () => {
                         </div>
                     </div>
                     <div class="card-action">
-                        <a href="propertyDetails.html">View More</a>
+                        <a href="html/propertyDetails.html">View More</a>
                     </div>
                 </div>
                 `;
