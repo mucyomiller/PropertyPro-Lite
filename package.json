@@ -8,7 +8,8 @@
     "build": "mkdir dist && babel server -s -d dist",
     "test": "nyc --reporter=html --reporter=text mocha server/**/*.js --require @babel/register --exit",
     "lint": "eslint server -c .eslintrc --ext js",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "heroku": "babel-node  server/index.js"
   },
   "repository": {
     "type": "git",
