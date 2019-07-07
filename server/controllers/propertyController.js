@@ -111,6 +111,45 @@ class PropertyController {
       error: 'No property found'
     });
   }
+
+  // update property details
+  // eslint-disable-next-line consistent-return
+  static updateProperty(req, res) {
+    const { id } = req.params;
+    const schema = Joi.object().keys({
+      owner: Joi.number()
+        .integer()
+        .min(1),
+      price: Joi.number().min(0),
+      state: Joi.string().min(2),
+      city: Joi.string().min(2),
+      address: Joi.string().min(2),
+      type: Joi.string().min(3)
+    });
+    const { error: validationErrors } = Joi.validate(req.body, schema, { abortEarly: false });
+    if (validationErrors) {
+      const error = [];
+      const { details: errors = [] } = validationErrors || {};
+      errors.forEach(element => {
+        error.push(element.message.split('"').join(''));
+      });
+      return res.status(400).json({
+        status: res.statusCode,
+        error
+      });
+    }
+    const property = properties.find(item => item.id === parseInt(id, 10));
+    if (property) {
+      const datas = Object.keys(req.body);
+      datas.forEach(data => {
+        property[data] = req.body[data];
+      });
+      return res.status(201).json({
+        status: res.statusCode,
+        data: property
+      });
+    }
+  }
 }
 
 export default PropertyController;
