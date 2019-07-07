@@ -95,6 +95,22 @@ class PropertyController {
       });
     });
   }
+
+  static deleteProperty(req, res) {
+    const { id } = req.params;
+    const propertyIndex = properties.findIndex(item => item.id === parseInt(id, 10));
+    if (propertyIndex !== -1) {
+      properties.splice(propertyIndex, 1);
+      return res.status(200).json({
+        status: res.statusCode,
+        message: 'Property deleted successfully'
+      });
+    }
+    return res.status(404).json({
+      status: res.statusCode,
+      error: 'No property found'
+    });
+  }
 }
 
 export default PropertyController;
