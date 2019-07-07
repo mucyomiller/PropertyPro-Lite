@@ -12,5 +12,6 @@ router.post('/property', multipartyMiddle, PropertyController.addNewProperty);
 router.delete('/property/:id', PropertyController.deleteProperty);
 router.patch('/property/:id', multipartyMiddle, PropertyController.updateProperty);
 router.patch('/property/:id/sold', PropertyController.markPropertyAsSold);
+router.get('/property', PropertyController.viewPropertiesByType);
 
 export default router;
