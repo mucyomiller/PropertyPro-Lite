@@ -1,2 +1,3 @@
-# PropertyPro-Lite
+# PropertyPro-Lite   
+[![Build Status](https://travis-ci.com/mucyomiller/PropertyPro-Lite.svg?branch=develop)](https://travis-ci.com/mucyomiller/PropertyPro-Lite) [![Coverage Status](https://coveralls.io/repos/github/mucyomiller/PropertyPro-Lite/badge.svg?branch=develop)](https://coveralls.io/github/mucyomiller/PropertyPro-Lite?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/b6a6f93f78d00ffce864/maintainability)](https://codeclimate.com/github/mucyomiller/PropertyPro-Lite/maintainability)   
 Property Pro Lite is a platform where people can create and/or search properties for sale or rent.
