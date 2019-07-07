@@ -167,6 +167,21 @@ class PropertyController {
       error: 'No property found'
     });
   }
+
+  // view properties by type
+  static viewPropertiesByType(req, res) {
+    const foundProperties = properties.filter(item => item.type === req.query.type);
+    if (foundProperties.length > 0) {
+      return res.status(200).json({
+        status: res.statusCode,
+        data: foundProperties
+      });
+    }
+    return res.status(404).json({
+      status: res.statusCode,
+      error: 'No properties of such a type'
+    });
+  }
 }
 
 export default PropertyController;
