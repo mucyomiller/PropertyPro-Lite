@@ -9,5 +9,6 @@ const router = express.Router();
 router.get('/properties', PropertyController.viewAllProperties);
 router.get('/property/:id', PropertyController.viewPropertyById);
 router.post('/property', multipartyMiddle, PropertyController.addNewProperty);
+router.delete('/property/:id', PropertyController.deleteProperty);
 
 export default router;
