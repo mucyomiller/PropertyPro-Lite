@@ -26,11 +26,12 @@ class PropertyController {
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
       Respond.response(res, 200, property);
+      return;
     }
     Respond.response(res, 404, 'No property found', true);
   }
 
-  // create a new property advert
+  // create a new property adverts
   // eslint-disable-next-line consistent-return
   static addNewProperty(req, res) {
     const { owner, price, state, city, address, type } = req.body;
@@ -38,16 +39,18 @@ class PropertyController {
     cloudinary.uploader.upload(propertyImage, (result, error) => {
       if (error) {
         Respond.response(res, 400, error, true);
+        // stop further execution in this callback
+        return;
       }
       const newProperty = {
-        id: properties.length + 1,
-        owner,
-        status: 'available',
         price,
         state,
         city,
         address,
         type,
+        owner,
+        id: properties.length + 1,
+        status: 'available',
         created_on: moment().format(),
         image_url: result.url
       };
@@ -62,6 +65,7 @@ class PropertyController {
     if (propertyIndex !== -1) {
       properties.splice(propertyIndex, 1);
       Respond.response(res, 200, { message: 'Property deleted successfully' });
+      return;
     }
     Respond.response(res, 404, 'no property found!', true);
   }
@@ -86,6 +90,7 @@ class PropertyController {
     if (property) {
       property.status = 'sold';
       Respond.response(res, 200, property);
+      return;
     }
     Respond.response(res, 404, 'No property found', true);
   }
@@ -95,6 +100,7 @@ class PropertyController {
     const propertiesResult = properties.filter(item => item.type === req.query.type);
     if (propertiesResult.length > 0) {
       Respond.response(res, 200, propertiesResult);
+      return;
     }
     Respond.response(res, 404, 'No properties of such a type', true);
   }
