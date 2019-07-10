@@ -1,8 +1,8 @@
 import cloudinary from 'cloudinary';
 import dotenv from 'dotenv';
-import Joi from '@hapi/joi';
 import moment from 'moment';
 import properties from '../model/properties';
+import Respond from '../helpers/responseHandler';
 
 dotenv.config();
 
@@ -17,10 +17,7 @@ cloudinary.config({
 class PropertyController {
   // view all properties
   static viewAllProperties(req, res) {
-    return res.status(200).json({
-      status: res.statusCode,
-      data: properties
-    });
+    Respond.response(res, 200, properties);
   }
 
   // view specific property
@@ -28,53 +25,19 @@ class PropertyController {
     const { id } = req.params;
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
-      return res.status(200).json({
-        status: res.statusCode,
-        data: property
-      });
+      Respond.response(res, 200, property);
     }
-    return res.status(404).json({
-      status: res.statusCode,
-      error: 'No property found'
-    });
+    Respond.response(res, 404, 'No property found', true);
   }
 
   // create a new property advert
   // eslint-disable-next-line consistent-return
   static addNewProperty(req, res) {
-    const schema = Joi.object().keys({
-      owner: Joi.number()
-        .integer()
-        .required(),
-      price: Joi.number().required(),
-      state: Joi.string().required(),
-      city: Joi.string().required(),
-      address: Joi.string().required(),
-      type: Joi.string().required()
-    });
-    const { error: validationErrors } = Joi.validate(req.body, schema, { abortEarly: false });
-    if (validationErrors || !req.files.image) {
-      const error = [];
-      const { details: errors = [] } = validationErrors || {};
-      errors.forEach(element => {
-        error.push(element.message.split('"').join(''));
-      });
-      if (!req.files.image) {
-        error.push('No image file selected');
-      }
-      return res.status(400).json({
-        status: res.statusCode,
-        error
-      });
-    }
     const { owner, price, state, city, address, type } = req.body;
     const propertyImage = req.files.image.path;
     cloudinary.uploader.upload(propertyImage, (result, error) => {
       if (error) {
-        return res.status(400).json({
-          status: res.statusCode,
-          error
-        });
+        Respond.response(res, 400, error, true);
       }
       const newProperty = {
         id: properties.length + 1,
@@ -89,10 +52,7 @@ class PropertyController {
         image_url: result.url
       };
       properties.push(newProperty);
-      return res.status(201).json({
-        status: res.statusCode,
-        data: newProperty
-      });
+      Respond.response(res, 201, newProperty);
     });
   }
 
@@ -101,53 +61,21 @@ class PropertyController {
     const propertyIndex = properties.findIndex(item => item.id === parseInt(id, 10));
     if (propertyIndex !== -1) {
       properties.splice(propertyIndex, 1);
-      return res.status(200).json({
-        status: res.statusCode,
-        message: 'Property deleted successfully'
-      });
+      Respond.response(res, 200, { message: 'Property deleted successfully' });
     }
-    return res.status(404).json({
-      status: res.statusCode,
-      error: 'No property found'
-    });
+    Respond.response(res, 404, 'no property found!', true);
   }
 
-  // update property details
   // eslint-disable-next-line consistent-return
   static updateProperty(req, res) {
     const { id } = req.params;
-    const schema = Joi.object().keys({
-      owner: Joi.number()
-        .integer()
-        .min(1),
-      price: Joi.number().min(0),
-      state: Joi.string().min(2),
-      city: Joi.string().min(2),
-      address: Joi.string().min(2),
-      type: Joi.string().min(3)
-    });
-    const { error: validationErrors } = Joi.validate(req.body, schema, { abortEarly: false });
-    if (validationErrors) {
-      const error = [];
-      const { details: errors = [] } = validationErrors || {};
-      errors.forEach(element => {
-        error.push(element.message.split('"').join(''));
-      });
-      return res.status(400).json({
-        status: res.statusCode,
-        error
-      });
-    }
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
       const datas = Object.keys(req.body);
       datas.forEach(data => {
         property[data] = req.body[data];
       });
-      return res.status(201).json({
-        status: res.statusCode,
-        data: property
-      });
+      Respond.response(res, 201, property);
     }
   }
 
@@ -157,30 +85,18 @@ class PropertyController {
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
       property.status = 'sold';
-      return res.status(200).json({
-        status: res.statusCode,
-        data: property
-      });
+      Respond.response(res, 200, property);
     }
-    return res.status(404).json({
-      status: res.statusCode,
-      error: 'No property found'
-    });
+    Respond.response(res, 404, 'No property found', true);
   }
 
   // view properties by type
   static viewPropertiesByType(req, res) {
-    const foundProperties = properties.filter(item => item.type === req.query.type);
-    if (foundProperties.length > 0) {
-      return res.status(200).json({
-        status: res.statusCode,
-        data: foundProperties
-      });
+    const propertiesResult = properties.filter(item => item.type === req.query.type);
+    if (propertiesResult.length > 0) {
+      Respond.response(res, 200, propertiesResult);
     }
-    return res.status(404).json({
-      status: res.statusCode,
-      error: 'No properties of such a type'
-    });
+    Respond.response(res, 404, 'No properties of such a type', true);
   }
 }
 
