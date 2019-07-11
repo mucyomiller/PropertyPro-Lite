@@ -54,4 +54,28 @@ export class Validation {
     });
     genericValidator(req, res, schema, next);
   }
+
+  static userValidator(req, res, next) {
+    const schema = Joi.object().keys({
+      email: Joi.string()
+        .email()
+        .required(),
+      first_name: Joi.string()
+        .min(3)
+        .required(),
+      last_name: Joi.string()
+        .min(3)
+        .required(),
+      password: Joi.string()
+        .regex(/^[a-zA-Z0-9]{3,30}$/)
+        .required(),
+      phone_number: Joi.number()
+        .min(10)
+        .required(),
+      address: Joi.string()
+        .min(2)
+        .required()
+    });
+    genericValidator(req, res, schema, next);
+  }
 }

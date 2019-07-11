@@ -14,10 +14,11 @@ cloudinary.config({
   api_secret: CLOUDNARY_API_SECRET
 });
 
+const { response } = Respond;
 class PropertyController {
   // view all properties
   static viewAllProperties(req, res) {
-    Respond.response(res, 200, properties);
+    return response(res, 200, properties);
   }
 
   // view specific property
@@ -25,10 +26,9 @@ class PropertyController {
     const { id } = req.params;
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
-      Respond.response(res, 200, property);
-      return;
+      return response(res, 200, property);
     }
-    Respond.response(res, 404, 'No property found', true);
+    return response(res, 404, 'No property found', true);
   }
 
   // create a new property adverts
@@ -38,9 +38,8 @@ class PropertyController {
     const propertyImage = req.files.image.path;
     cloudinary.uploader.upload(propertyImage, (result, error) => {
       if (error) {
-        Respond.response(res, 400, error, true);
-        // stop further execution in this callback
-        return;
+        // return to stop further execution in this callback
+        return response(res, 400, error, true);
       }
       const newProperty = {
         price,
@@ -55,7 +54,7 @@ class PropertyController {
         image_url: result.url
       };
       properties.push(newProperty);
-      Respond.response(res, 201, newProperty);
+      return response(res, 201, newProperty);
     });
   }
 
@@ -64,10 +63,11 @@ class PropertyController {
     const propertyIndex = properties.findIndex(item => item.id === parseInt(id, 10));
     if (propertyIndex !== -1) {
       properties.splice(propertyIndex, 1);
-      Respond.response(res, 200, { message: 'Property deleted successfully' });
-      return;
+      return response(res, 200, {
+        message: 'Property deleted successfully'
+      });
     }
-    Respond.response(res, 404, 'no property found!', true);
+    return response(res, 404, 'no property found!', true);
   }
 
   // eslint-disable-next-line consistent-return
@@ -79,10 +79,9 @@ class PropertyController {
       datas.forEach(data => {
         property[data] = req.body[data];
       });
-      Respond.response(res, 200, property);
-      return;
+      return response(res, 200, property);
     }
-    Respond.response(res, 404, 'property your are trying to update is not available!', true);
+    return response(res, 404, 'property your are trying to update is not available!', true);
   }
 
   // mark property as sold
@@ -91,20 +90,18 @@ class PropertyController {
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
       property.status = 'sold';
-      Respond.response(res, 200, property);
-      return;
+      return response(res, 200, property);
     }
-    Respond.response(res, 404, 'No property found', true);
+    return response(res, 404, 'No property found', true);
   }
 
   // view properties by type
   static viewPropertiesByType(req, res) {
     const propertiesResult = properties.filter(item => item.type === req.query.type);
     if (propertiesResult.length > 0) {
-      Respond.response(res, 200, propertiesResult);
-      return;
+      return response(res, 200, propertiesResult);
     }
-    Respond.response(res, 404, 'No available properties of such a type', true);
+    return response(res, 404, 'No available properties of such a type', true);
   }
 }
 

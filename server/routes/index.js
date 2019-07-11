@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import PropertyRoutes from './PropertyRoutes';
+import AuthRoutes from './AuthRoutes';
 import Respond from '../helpers/ResponseHandler';
 
 const router = new Router();
@@ -10,6 +11,7 @@ router.route('/').get((req, res) => {
 
 // properties route
 router.use(PropertyRoutes);
+router.use('/auth', AuthRoutes);
 
 // catch 404 routes
 router.use('*', (req, res) => {

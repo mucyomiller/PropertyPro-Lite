@@ -8,7 +8,6 @@ import app from '../index';
 import properties from '../model/properties';
 import PropertyController from '../controllers/PropertyController';
 import { genericValidator } from '../middleware/validation';
-import Respond from '../helpers/ResponseHandler';
 
 // Configure chai
 chai.use(chaiHttp);

@@ -2,7 +2,7 @@
   "extends": ["airbnb", "prettier"],
   "plugins": ["prettier"],
   "parserOptions": {
-    "ecmaVersion": 2017
+    "ecmaVersion": 2018
   },
   "rules": {
     "prettier/prettier": ["error"]
