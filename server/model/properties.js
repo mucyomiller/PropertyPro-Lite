@@ -2,7 +2,7 @@ const properties = [
   {
     id: 1,
     owner: 1, // user id
-    status: 'sold', // sold,available - default is available
+    status: 'available', // sold,available - default is available
     price: 8000000,
     state: 'Rwanda', // State where property is located
     city: 'Kigali', // City where property is located

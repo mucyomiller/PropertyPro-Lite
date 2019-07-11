@@ -9,7 +9,8 @@
     "test": "nyc --reporter=html --reporter=text mocha server/**/*.js --require @babel/register --exit",
     "lint": "eslint server -c .eslintrc --ext js",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
-    "heroku": "babel-node  server/index.js"
+    "heroku": "babel-node  server/index.js",
+    "only-test": "mocha --inspect-brk server/test/property.js --require @babel/register --exit"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,15 @@
   "homepage": "https://github.com/mucyomiller/PropertyPro-Lite#readme",
   "dependencies": {
     "@hapi/joi": "^15.1.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "node-mocks-http": "^1.7.6",
     "cloudinary": "^1.14.0",
     "connect-multiparty": "^2.2.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "sinon": "^7.3.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
@@ -36,8 +41,6 @@
     "@babel/preset-env": "^7.5.0",
     "@babel/register": "^7.4.4",
     "babel-eslint": "^10.0.2",
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "coveralls": "^3.0.4",
     "eslint": "5.3.0",
     "eslint-config-airbnb": "17.1.1",

@@ -79,8 +79,10 @@ class PropertyController {
       datas.forEach(data => {
         property[data] = req.body[data];
       });
-      Respond.response(res, 201, property);
+      Respond.response(res, 200, property);
+      return;
     }
+    Respond.response(res, 404, 'property your are trying to update is not available!', true);
   }
 
   // mark property as sold
@@ -102,7 +104,7 @@ class PropertyController {
       Respond.response(res, 200, propertiesResult);
       return;
     }
-    Respond.response(res, 404, 'No properties of such a type', true);
+    Respond.response(res, 404, 'No available properties of such a type', true);
   }
 }
 
