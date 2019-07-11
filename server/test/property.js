@@ -6,8 +6,9 @@ import httpMocks from 'node-mocks-http';
 import Joi from '@hapi/joi';
 import app from '../index';
 import properties from '../model/properties';
-import PropertyController from '../controllers/propertyController';
+import PropertyController from '../controllers/PropertyController';
 import { genericValidator } from '../middleware/validation';
+import Respond from '../helpers/ResponseHandler';
 
 // Configure chai
 chai.use(chaiHttp);
@@ -92,6 +93,19 @@ describe('Properties', () => {
           res.body.should.have
             .property('error')
             .eql('property your are trying to update is not available!');
+          done();
+        });
+    });
+    it('it should fails with errors if you dont meet required properties', done => {
+      chai
+        .request(app)
+        .patch('/api/v1/property/1')
+        .send({
+          prices: 1000
+        })
+        .end((err, res) => {
+          res.should.have.status(400);
+          res.body.should.have.property('errors').be.a('array');
           done();
         });
     });
