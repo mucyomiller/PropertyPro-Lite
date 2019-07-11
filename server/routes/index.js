@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import propertyRoutes from './propertyRoutes';
-import Respond from '../helpers/responseHandler';
+import PropertyRoutes from './PropertyRoutes';
+import Respond from '../helpers/ResponseHandler';
 
 const router = new Router();
 
@@ -9,7 +9,7 @@ router.route('/').get((req, res) => {
 });
 
 // properties route
-router.use(propertyRoutes);
+router.use(PropertyRoutes);
 
 // catch 404 routes
 router.use('*', (req, res) => {
