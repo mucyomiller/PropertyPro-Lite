@@ -16,3 +16,5 @@ app.use('/api/v1/', routes);
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`server running on port ${PORT}...`));
+
+export default app;

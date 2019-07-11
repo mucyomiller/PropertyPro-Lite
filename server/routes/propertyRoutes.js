@@ -1,7 +1,7 @@
 import express from 'express';
 import multiparty from 'connect-multiparty';
 import PropertyController from '../controllers/propertyController';
-import Validation from '../middleware/validation';
+import { Validation } from '../middleware/validation';
 
 const multipartyMiddle = multiparty();
 

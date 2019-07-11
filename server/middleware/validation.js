@@ -1,6 +1,6 @@
 import Joi from '@hapi/joi';
 
-const genericValidator = (req, res, schema, next) => {
+export const genericValidator = (req, res, schema, next) => {
   const { error } = Joi.validate(req.body, schema, {
     abortEarly: false
   });
@@ -18,7 +18,7 @@ const genericValidator = (req, res, schema, next) => {
   return next();
 };
 
-class Validation {
+export class Validation {
   static updatePropertyValidator(req, res, next) {
     const schema = Joi.object().keys({
       owner: Joi.number().integer(),
@@ -52,8 +52,6 @@ class Validation {
         .min(3)
         .required()
     });
-    genericValidator(req, req, schema, next);
+    genericValidator(req, res, schema, next);
   }
 }
-
-export default Validation;
