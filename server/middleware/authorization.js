@@ -1,7 +1,7 @@
-import JWT from '../helpers/JWT';
+import AuthHelper from '../helpers/AuthHelper';
 import Respond from '../helpers/ResponseHandler';
 // retreive needed funcs
-const { jwtVerifiy } = JWT;
+const { jwtVerifiy } = AuthHelper;
 // get response func
 const { response } = Respond;
 

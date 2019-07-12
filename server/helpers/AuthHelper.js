@@ -1,9 +1,12 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 const { JWT_SECRET } = process.env;
-class JWT {
+const SaltRounds = 8;
+
+class AuthHelper {
   static jwtSign(user) {
     // remove password from User Model
     const { password, ...patchedUser } = user;
@@ -14,6 +17,14 @@ class JWT {
     const decoded = jwt.verify(token, JWT_SECRET);
     return decoded;
   }
+
+  static comparePassword(password, hash) {
+    return bcrypt.compareSync(password, hash);
+  }
+
+  static hashPassword(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(SaltRounds));
+  }
 }
 
-export default JWT;
+export default AuthHelper;
