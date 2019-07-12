@@ -19,12 +19,12 @@ class AuthController {
       password: hashedPassword,
       is_admin: false
     };
-    const { password: p, ...patchedUser } = user;
+    const { password: p, ...patchedUser } = user; // remove password from object
     users.push(user);
     // generate token
     const token = jwtSign(patchedUser);
-    const OutUser = { token, ...patchedUser };
-    return response(res, 200, OutUser);
+    const patchedUserWithToken = { token, ...patchedUser };
+    return response(res, 201, patchedUserWithToken);
   }
 
   // eslint-disable-next-line consistent-return

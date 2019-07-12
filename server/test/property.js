@@ -8,6 +8,7 @@ import app from '../index';
 import properties from '../model/properties';
 import PropertyController from '../controllers/PropertyController';
 import { genericValidator } from '../middleware/validation';
+import utils from './utils';
 
 // Configure chai
 chai.use(chaiHttp);
@@ -84,6 +85,7 @@ describe('Properties', () => {
       chai
         .request(app)
         .patch('/api/v1/property/100')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           price: 1000
         })
@@ -99,6 +101,7 @@ describe('Properties', () => {
       chai
         .request(app)
         .patch('/api/v1/property/1')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           prices: 1000
         })
@@ -108,10 +111,24 @@ describe('Properties', () => {
           done();
         });
     });
+    it('it should fails you try to update property which not yours', done => {
+      chai
+        .request(app)
+        .patch('/api/v1/property/1')
+        .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
+        .send({
+          price: 1000
+        })
+        .end((err, res) => {
+          res.should.have.status(403);
+          done();
+        });
+    });
     it('it should return 200 after successfully updated specific property', done => {
       chai
         .request(app)
         .patch('/api/v1/property/1')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           price: 100
         })
@@ -126,6 +143,7 @@ describe('Properties', () => {
         .request(app)
         .patch('/api/v1/property/1/sold')
         .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have
@@ -136,12 +154,28 @@ describe('Properties', () => {
           done();
         });
     });
+    it('it should 403 if you try to mark as sold property which not yours', done => {
+      chai
+        .request(app)
+        .patch('/api/v1/property/1/sold')
+        .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.have
+            .property('error')
+            .have.property('message')
+            .eql('You are allowed to mark as sold your property only!');
+          done();
+        });
+    });
 
     it('it should fails to mark property as sold if not available', done => {
       chai
         .request(app)
         .patch('/api/v1/property/100/sold')
         .set('content-type', 'application/json')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('error').be.eql('No property found');
@@ -198,10 +232,26 @@ describe('Properties', () => {
     });
   });
   describe('DELETE /', () => {
+    it('it should return 403 when try to delete property which not yours', done => {
+      chai
+        .request(app)
+        .delete('/api/v1/property/1')
+        .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
+        .end((err, res) => {
+          res.should.have.status(403);
+          res.body.should.have
+            .property('error')
+            .have.property('message')
+            .eql('You are allowed to delete your property only!');
+          done();
+        });
+    });
+
     it('it should return 200 status when delete operation was successful', done => {
       chai
         .request(app)
         .delete('/api/v1/property/1')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data').be.a('object');
@@ -217,6 +267,7 @@ describe('Properties', () => {
       chai
         .request(app)
         .delete('/api/v1/property/100')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('error').be.a('string');

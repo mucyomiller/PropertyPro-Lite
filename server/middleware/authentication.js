@@ -5,7 +5,7 @@ const { jwtVerifiy } = AuthHelper;
 // get response func
 const { response } = Respond;
 
-class Authorization {
+class Authentication {
   static checkToken(req, res, next) {
     const { authorization } = req.headers;
     if (authorization) {
@@ -21,9 +21,9 @@ class Authorization {
     }
     return res.status(401).json({
       status: res.statusCode,
-      message: 'authorization failed!'
+      message: 'Authentication failed!'
     });
   }
 }
 
-export default Authorization;
+export default Authentication;
