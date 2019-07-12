@@ -62,10 +62,13 @@ class PropertyController {
     const { id } = req.params;
     const propertyIndex = properties.findIndex(item => item.id === parseInt(id, 10));
     if (propertyIndex !== -1) {
-      properties.splice(propertyIndex, 1);
-      return response(res, 200, {
-        message: 'Property deleted successfully'
-      });
+      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
+        properties.splice(propertyIndex, 1);
+        return response(res, 200, {
+          message: 'Property deleted successfully'
+        });
+      }
+      return response(res, 403, { message: 'You are allowed to delete your property only!' }, true);
     }
     return response(res, 404, 'no property found!', true);
   }
@@ -75,11 +78,14 @@ class PropertyController {
     const { id } = req.params;
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
-      const datas = Object.keys(req.body);
-      datas.forEach(data => {
-        property[data] = req.body[data];
-      });
-      return response(res, 200, property);
+      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
+        const datas = Object.keys(req.body);
+        datas.forEach(data => {
+          property[data] = req.body[data];
+        });
+        return response(res, 200, property);
+      }
+      return response(res, 403, { message: 'You are allowed to update your property only!' }, true);
     }
     return response(res, 404, 'property your are trying to update is not available!', true);
   }
@@ -89,8 +95,16 @@ class PropertyController {
     const { id } = req.params;
     const property = properties.find(item => item.id === parseInt(id, 10));
     if (property) {
-      property.status = 'sold';
-      return response(res, 200, property);
+      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
+        property.status = 'sold';
+        return response(res, 200, property);
+      }
+      return response(
+        res,
+        403,
+        { message: 'You are allowed to mark as sold your property only!' },
+        true
+      );
     }
     return response(res, 404, 'No property found', true);
   }
