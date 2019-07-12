@@ -1,6 +1,5 @@
 import JWT from '../helpers/JWT';
 import Respond from '../helpers/ResponseHandler';
-import { italic } from 'ansi-colors';
 // retreive needed funcs
 const { jwtVerifiy } = JWT;
 // get response func

@@ -12,9 +12,9 @@ class AuthController {
   // eslint-disable-next-line consistent-return
   static signIn(req, res) {
     const { email, password: pass } = req.body;
-    const user = users.find(u => u.email === email && u.password === pass);
-    if (user) {
-      const { password, ...patchedUser } = user;
+    const currentUser = users.find(user => user.email === email && user.password === pass);
+    if (currentUser) {
+      const { password, ...patchedUser } = currentUser;
       const token = jwtSign(patchedUser);
       return res.status(200).json({
         status: 'success',
