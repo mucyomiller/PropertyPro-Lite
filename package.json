@@ -24,6 +24,7 @@
   "homepage": "https://github.com/mucyomiller/PropertyPro-Lite#readme",
   "dependencies": {
     "@hapi/joi": "^15.1.0",
+    "bcrypt": "^3.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "cloudinary": "^1.14.0",

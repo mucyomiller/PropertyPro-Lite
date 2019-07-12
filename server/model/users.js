@@ -4,7 +4,7 @@ const users = [
     email: 'mucyofred@gmail.com',
     first_name: 'mucyo',
     last_name: 'fred',
-    password: 'c00lssap',
+    password: '$2b$08$T/feABxhGFbgS4m1K52K6ONmWE/UikhWiDsjQD4VsJa6w9/XBYHOa',
     phone_number: '0782535706',
     address: 'NY',
     is_admin: true
@@ -14,7 +14,7 @@ const users = [
     email: 'me@mucyofred.com',
     first_name: 'mucyo',
     last_name: 'miller',
-    password: 'c00lssap',
+    password: '$2b$08$T/feABxhGFbgS4m1K52K6ONmWE/UikhWiDsjQD4VsJa6w9/XBYHOa',
     phone_number: '0722535706',
     address: 'NG',
     is_admin: false
