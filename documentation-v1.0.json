@@ -1,0 +1,242 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Property Pro Lite is a platform where people can create and / or search properties for sale or rent.",
+    "version": "1.0",
+    "title": "PropertyPro-Lite"
+  },
+  "host": "mucyo-property-pro-lite.herokuapp.com",
+  "tags": [{
+    "name": "Authentication"
+  }, {
+    "name": "Properties"
+  }],
+  "schemes": ["https"],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Creating an account",
+        "parameters": [{
+          "in": "body",
+          "name": "signup",
+          "description": "Sign Up Payload",
+          "schema": {
+            "$ref": "#/definitions/User"
+          }
+        }],
+        "responses": {
+          "201": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signin": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Sign In User.",
+        "parameters": [{
+          "in": "body",
+          "name": "signin",
+          "description": "Sign In Payload",
+          "schema": {
+            "$ref": "#/definitions/Login"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/properties": {
+      "get": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Get All listed  properties",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/api/v1/property/{id}": {
+      "get": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Get a specific  property",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Update a specific Property",
+        "parameters": [{
+          "name": "update payload",
+          "in": "body",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/Property"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Delete a particular property",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "ID of pet to update",
+          "required": true,
+          "type": "integer",
+          "format": "int64"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/api/v1/property": {
+      "post": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Create a  property",
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Get property by type",
+        "parameters": [{
+          "in": "query",
+          "name": "type",
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/v1/property/{id}/sold": {
+      "patch": {
+        "tags": [
+          "Properties"
+        ],
+        "summary": "Mark  specific  property as sold",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Login": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phone_number": {
+          "type": "string"
+        }
+      }
+    },
+    "Property": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "integer"
+        },
+        "price": {
+          "type": "integer"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

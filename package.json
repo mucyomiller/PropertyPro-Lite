@@ -34,7 +34,8 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "node-mocks-http": "^1.7.6",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "swagger-ui-express": "^4.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",

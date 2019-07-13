@@ -50,7 +50,8 @@ export class Validation {
         .required(),
       type: Joi.string()
         .min(3)
-        .required()
+        .required(),
+      image: Joi.binary()
     });
     genericValidator(req, res, schema, next);
   }
