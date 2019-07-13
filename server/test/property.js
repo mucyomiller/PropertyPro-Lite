@@ -4,11 +4,14 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import httpMocks from 'node-mocks-http';
 import Joi from '@hapi/joi';
+import { uploader } from 'cloudinary';
 import app from '../index';
 import properties from '../model/properties';
-import PropertyController from '../controllers/PropertyController';
 import { genericValidator } from '../middleware/validation';
 import utils from './utils';
+
+// create sinon sandbox
+const sandBox = sinon.createSandbox();
 
 // Configure chai
 chai.use(chaiHttp);
@@ -186,25 +189,7 @@ describe('Properties', () => {
 
   describe('POST /', () => {
     it('it should return 201 and newly created property object', done => {
-      // TODO: i will comeback to this!
-      sinon.stub(PropertyController, 'addNewProperty').callsFake(() => {
-        return {
-          status: 201,
-          data: {
-            id: 2,
-            owner: 1,
-            status: 'sold',
-            price: '100',
-            state: 'Rwanda',
-            city: 'Kigali',
-            address: 'KK 1 st',
-            type: '3 bedroom',
-            created_on: '2019-07-07T17:39:17+02:00',
-            image_url:
-              'https://res.cloudinary.com/mucyomiller/image/upload/v1562518550/apartment1_hemjm4.jpg'
-          }
-        };
-      });
+      // stripped down result from cloudinary
       done();
     });
   });
