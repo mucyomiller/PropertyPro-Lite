@@ -1,0 +1,746 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "PropertyPro-Lite",
+    "description" : "Property Pro Lite is a platform where people can create and / or search properties for sale or rent.",
+    "version" : "1.0-oas3"
+  },
+  "servers" : [ {
+    "url" : "https://mucyo-property-pro-lite.herokuapp.com/"
+  }, {
+    "url" : "http://localhost:3000"
+  } ],
+  "tags" : [ {
+    "name" : "Authentication"
+  }, {
+    "name" : "Properties"
+  } ],
+  "paths" : {
+    "/api/v1/auth/signup" : {
+      "post" : {
+        "tags" : [ "Authentication" ],
+        "summary" : "Creating User Account",
+        "requestBody" : {
+          "description" : "Required Payload For Sign Up",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "User Created Successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : "success",
+                      "data" : {
+                        "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiYmViZSIsImxhc3RfbmFtZSI6ImJlYmUiLCJlbWFpbCI6ImJlYmVAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiMDc4MTUzNTcwNiIsImFkZHJlc3MiOiJrayIsImlzX2FkbWluIjpmYWxzZSwiaWF0IjoxNTYzMjAzNzAzLCJleHAiOjE1NjMyOTAxMDN9.da44qvjcNvmjyR40sd27mHYAy6DZOa8dIEGCrnAsISE",
+                        "first_name" : "bebe",
+                        "last_name" : "bebe",
+                        "email" : "bebe@gmail.com",
+                        "phone_number" : "0782535706",
+                        "address" : "kk",
+                        "is_admin" : false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "User Supplied Malformatted Data",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 400,
+                  "errors" : [ "address is required", "addresss is not allowed" ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signin" : {
+      "post" : {
+        "tags" : [ "Authentication" ],
+        "summary" : "Sign In User.",
+        "requestBody" : {
+          "description" : "Required Payload For User To Sign In",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Login"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "User Successful Logged In",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : "success",
+                      "data" : {
+                        "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmaXJzdF9uYW1lIjoiYmViZSIsImxhc3RfbmFtZSI6ImJlYmUiLCJlbWFpbCI6ImJlYmVAZ21haWwuY29tIiwicGhvbmVfbnVtYmVyIjoiMDc4MTUzNTcwNiIsImFkZHJlc3MiOiJrayIsImlzX2FkbWluIjpmYWxzZSwiaWF0IjoxNTYzMjIzMzI0LCJleHAiOjE1NjMzMDk3MjR9.BoWX4T-4SleeP0tiZ6I6SPNu73WMRm-ZTMTb9hfQ1as",
+                        "first_name" : "bebe",
+                        "last_name" : "bebe",
+                        "email" : "bebe@gmail.com",
+                        "phone_number" : "0781535706",
+                        "address" : "kk",
+                        "is_admin" : false
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "User Supplied Malformatted Data",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 400,
+                  "errors" : [ "address is required", "addresss is not allowed" ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/properties" : {
+      "get" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Get All Listed Properties",
+        "responses" : {
+          "200" : {
+            "description" : "All properties listed successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 200,
+                      "data" : [ {
+                        "id" : 1,
+                        "owner" : 1,
+                        "status" : "available",
+                        "price" : 8000000,
+                        "state" : "Rwanda",
+                        "city" : "Kigali",
+                        "address" : "KK 1 st",
+                        "type" : "3 bedroom",
+                        "created_on" : "2019-07-07T17:39:17+02:00",
+                        "image_url" : "https://res.cloudinary.com/mucyomiller/image/upload/v1562518550/apartment1_hemjm4.jpg"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/property/{id}" : {
+      "get" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Get a specific  property",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Listed a specific property successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 200,
+                      "data" : [ {
+                        "id" : 1,
+                        "owner" : 1,
+                        "status" : "available",
+                        "price" : 8000000,
+                        "state" : "Rwanda",
+                        "city" : "Kigali",
+                        "address" : "KK 1 st",
+                        "type" : "3 bedroom",
+                        "created_on" : "2019-07-07T17:39:17+02:00",
+                        "image_url" : "https://res.cloudinary.com/mucyomiller/image/upload/v1562518550/apartment1_hemjm4.jpg"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Is Not Found",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 404,
+                  "error" : "Route Not Found!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Delete a particular property",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of property  to delete",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Property Deleted Successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 200,
+                      "data" : {
+                        "message" : "Property deleted successfully"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Access token is missing or invalid",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 401,
+                  "message" : "Authentication failed!"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Your Are Not Allowed To Do What Your Trying To Do",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 403,
+                  "error" : {
+                    "message" : "You are allowed to mark as sold your property only!"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Is Not Found",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 404,
+                  "error" : "Route Not Found!"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      },
+      "patch" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Update a specific Property",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Property"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Property Updated Successsful"
+          },
+          "400" : {
+            "description" : "User Supplied Malformatted Data",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 400,
+                  "errors" : [ "address is required", "addresss is not allowed" ]
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Access token is missing or invalid",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 401,
+                  "message" : "Authentication failed!"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Your Are Not Allowed To Do What Your Trying To Do",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 403,
+                  "error" : {
+                    "message" : "You are allowed to mark as sold your property only!"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Is Not Found",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 404,
+                  "error" : "Route Not Found!"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/api/v1/property" : {
+      "get" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Get property by type",
+        "parameters" : [ {
+          "name" : "type",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Properties of Specified Type Are Listed Successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 200,
+                      "data" : [ {
+                        "price" : " 8000000",
+                        "state" : " Rwanda",
+                        "city" : " Kigali",
+                        "address" : " KK 1 st",
+                        "type" : " 3 bedroom",
+                        "owner" : 1,
+                        "id" : 1,
+                        "status" : "available",
+                        "created_on" : "2019-07-16T00:21:54+02:00",
+                        "image_url" : "http://res.cloudinary.com/mucyomiller/image/upload/v1563229308/wel7wues5sv8cro8pvzg.png"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Resource Is Not Found",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 404,
+                  "error" : "Route Not Found!"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Create a  property",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateProperty"
+              }
+            },
+            "multipart/form-data" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Property Created Successful",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 201,
+                      "data" : {
+                        "price" : " 8000000",
+                        "state" : " Rwanda",
+                        "city" : " Kigali",
+                        "address" : " KK 1 st",
+                        "type" : " 3 bedroom",
+                        "owner" : 1,
+                        "id" : 1,
+                        "status" : "available",
+                        "created_on" : "2019-07-16T00:21:54+02:00",
+                        "image_url" : "http://res.cloudinary.com/mucyomiller/image/upload/v1563229308/wel7wues5sv8cro8pvzg.png"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "User Supplied Malformatted Data",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 400,
+                  "errors" : [ "address is required", "addresss is not allowed" ]
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Access token is missing or invalid",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 401,
+                  "message" : "Authentication failed!"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    },
+    "/api/v1/property/{id}/sold" : {
+      "patch" : {
+        "tags" : [ "Properties" ],
+        "summary" : "Mark  specific  property as sold",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Successful Marked Property As Sold",
+            "content" : {
+              "application/json" : {
+                "examples" : {
+                  "foo" : {
+                    "value" : {
+                      "status" : 200,
+                      "data" : {
+                        "price" : " 8000000",
+                        "state" : " Rwanda",
+                        "city" : " Kigali",
+                        "address" : " KK 1 st",
+                        "type" : " 3 bedroom",
+                        "owner" : 1,
+                        "id" : 1,
+                        "status" : "sold",
+                        "created_on" : "2019-07-16T00:21:54+02:00",
+                        "image_url" : "http://res.cloudinary.com/mucyomiller/image/upload/v1563229308/wel7wues5sv8cro8pvzg.png"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401" : {
+            "description" : "Access token is missing or invalid",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 401,
+                  "message" : "Authentication failed!"
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Your Are Not Allowed To Do What Your Trying To Do",
+            "content" : {
+              "application/json" : {
+                "example" : {
+                  "status" : 403,
+                  "error" : {
+                    "message" : "You are allowed to mark as sold your property only!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuth" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Login" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "mucyomiller@gmail.com"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "c00lssap"
+          }
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "email" : {
+            "type" : "string",
+            "example" : "mucyomiller@gmail.com"
+          },
+          "first_name" : {
+            "type" : "string",
+            "example" : "fred"
+          },
+          "last_name" : {
+            "type" : "string",
+            "example" : "mucyo"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "kigali"
+          },
+          "password" : {
+            "type" : "string",
+            "example" : "c00lssap"
+          },
+          "phone_number" : {
+            "type" : "string",
+            "example" : "250782535706"
+          }
+        }
+      },
+      "Property" : {
+        "type" : "object",
+        "properties" : {
+          "owner" : {
+            "type" : "integer",
+            "example" : 1
+          },
+          "price" : {
+            "type" : "integer",
+            "example" : 1000000
+          },
+          "state" : {
+            "type" : "string",
+            "example" : "Rwanda"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Kigali"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "KK 1st"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "3 bedroom"
+          }
+        }
+      },
+      "CreateProperty" : {
+        "type" : "object",
+        "properties" : {
+          "price" : {
+            "type" : "integer",
+            "example" : 8000000
+          },
+          "state" : {
+            "type" : "string",
+            "example" : "Rwanda"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Kigali"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "KK 1 st"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "3 bedroom"
+          }
+        }
+      },
+      "body" : {
+        "type" : "object",
+        "properties" : {
+          "price" : {
+            "type" : "integer",
+            "example" : 10000000
+          },
+          "state" : {
+            "type" : "string",
+            "example" : "Rwanda"
+          },
+          "city" : {
+            "type" : "string",
+            "example" : "Kigali"
+          },
+          "address" : {
+            "type" : "string",
+            "example" : "KK 1 st"
+          },
+          "type" : {
+            "type" : "string",
+            "example" : "3 Bed room"
+          },
+          "image" : {
+            "type" : "string",
+            "format" : "binary"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "UnauthorizedError" : {
+        "description" : "Access token is missing or invalid",
+        "content" : {
+          "application/json" : {
+            "example" : {
+              "status" : 401,
+              "message" : "Authentication failed!"
+            }
+          }
+        }
+      },
+      "MalFormattedDataError" : {
+        "description" : "User Supplied Malformatted Data",
+        "content" : {
+          "application/json" : {
+            "example" : {
+              "status" : 400,
+              "errors" : [ "address is required", "addresss is not allowed" ]
+            }
+          }
+        }
+      },
+      "ForbiddenError" : {
+        "description" : "Your Are Not Allowed To Do What Your Trying To Do",
+        "content" : {
+          "application/json" : {
+            "example" : {
+              "status" : 403,
+              "error" : {
+                "message" : "You are allowed to mark as sold your property only!"
+              }
+            }
+          }
+        }
+      },
+      "NotFoundError" : {
+        "description" : "Resource Is Not Found",
+        "content" : {
+          "application/json" : {
+            "example" : {
+              "status" : 404,
+              "error" : "Route Not Found!"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}

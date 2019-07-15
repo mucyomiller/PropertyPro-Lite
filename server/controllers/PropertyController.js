@@ -34,7 +34,7 @@ class PropertyController {
   // create a new property adverts
   // eslint-disable-next-line consistent-return
   static addNewProperty(req, res) {
-    const { owner, price, state, city, address, type } = req.body;
+    const { price, state, city, address, type } = req.body;
     const propertyImage = req.files.image.path;
     cloudinary.uploader.upload(propertyImage, (result, error) => {
       if (error) {
@@ -47,7 +47,7 @@ class PropertyController {
         city,
         address,
         type,
-        owner,
+        owner: req.user.id,
         id: properties.length + 1,
         status: 'available',
         created_on: moment().format(),
