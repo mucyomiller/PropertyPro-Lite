@@ -4,6 +4,13 @@ node_js: "stable"
 
 install: npm install
 
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'CREATE DATABASE propertyprolite;' -U postgres
+  - npm run database
+
 scripts: npm test
 
 after_script: npm run coveralls
