@@ -19,6 +19,14 @@ class DbHelper {
       return { error: Error, response: null };
     }
   }
+
+  static async queryAll(tablename) {
+    if (tablename) {
+      const q = `SELECT * FROM ${tablename}`;
+      return DbHelper.query(q);
+    }
+    return { error: 'provide table name', response: null };
+  }
 }
 
 export default DbHelper;
