@@ -16,7 +16,7 @@
     "name" : "Properties"
   } ],
   "paths" : {
-    "/api/v1/auth/signup" : {
+    "/api/v2/auth/signup" : {
       "post" : {
         "tags" : [ "Authentication" ],
         "summary" : "Creating User Account",
@@ -68,7 +68,7 @@
         }
       }
     },
-    "/api/v1/auth/signin" : {
+    "/api/v2/auth/signin" : {
       "post" : {
         "tags" : [ "Authentication" ],
         "summary" : "Sign In User.",
@@ -120,7 +120,7 @@
         }
       }
     },
-    "/api/v1/properties" : {
+    "/api/v2/properties" : {
       "get" : {
         "tags" : [ "Properties" ],
         "summary" : "Get All Listed Properties",
@@ -154,7 +154,7 @@
         }
       }
     },
-    "/api/v1/property/{id}" : {
+    "/api/v2/property/{id}" : {
       "get" : {
         "tags" : [ "Properties" ],
         "summary" : "Get a specific  property",
@@ -360,7 +360,7 @@
         } ]
       }
     },
-    "/api/v1/property" : {
+    "/api/v2/property" : {
       "get" : {
         "tags" : [ "Properties" ],
         "summary" : "Get property by type",
@@ -487,7 +487,7 @@
         } ]
       }
     },
-    "/api/v1/property/{id}/sold" : {
+    "/api/v2/property/{id}/sold" : {
       "patch" : {
         "tags" : [ "Properties" ],
         "summary" : "Mark  specific  property as sold",

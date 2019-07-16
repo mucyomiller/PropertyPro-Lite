@@ -27,6 +27,22 @@ class DbHelper {
     }
     return { error: 'provide table name', response: null };
   }
+
+  static async find(tablename, column, value) {
+    if (tablename && column && value) {
+      const q = `SELECT * FROM ${tablename} WHERE ${column}=$1`;
+      return DbHelper.query(q, [value]);
+    }
+    return { error: 'provide table name & column & value', response: null };
+  }
+
+  static async findOne(tablename, column, value) {
+    if (tablename && column && value) {
+      const q = `SELECT * FROM ${tablename} WHERE ${column}=$1 LIMIT 1`;
+      return DbHelper.query(q, [value]);
+    }
+    return { error: 'provide table name & column & value', response: null };
+  }
 }
 
 export default DbHelper;

@@ -6,7 +6,6 @@ import httpMocks from 'node-mocks-http';
 import Joi from '@hapi/joi';
 import { uploader } from 'cloudinary';
 import app from '../index';
-import properties from '../model/properties';
 import { genericValidator } from '../middleware/validation';
 import utils from './utils';
 
@@ -25,11 +24,10 @@ describe('Properties', () => {
     it('should return all properties listed', done => {
       chai
         .request(app)
-        .get('/api/v1/properties')
+        .get('/api/v2/properties')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data').be.a('array');
-          res.body.should.have.property('data').eql(properties);
           done();
         });
     });
@@ -37,11 +35,10 @@ describe('Properties', () => {
     it('should return a specific property listed', done => {
       chai
         .request(app)
-        .get('/api/v1/property/1')
+        .get('/api/v2/property/1')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data').be.a('object');
-          res.body.should.have.property('data').eql(properties[0]);
           done();
         });
     });
@@ -49,7 +46,7 @@ describe('Properties', () => {
     it('should return 404 when  specified property is not found!', done => {
       chai
         .request(app)
-        .get('/api/v1/property/100')
+        .get('/api/v2/property/100')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('error').be.a('string');
@@ -61,7 +58,7 @@ describe('Properties', () => {
     it('should return  properties by type', done => {
       chai
         .request(app)
-        .get('/api/v1/property?type=3 bedroom')
+        .get('/api/v2/property?type=3 bedroom')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('data').be.a('array');
@@ -71,7 +68,7 @@ describe('Properties', () => {
     it('should return 404 if no available properties of such type', done => {
       chai
         .request(app)
-        .get('/api/v1/property?type=3 express')
+        .get('/api/v2/property?type=3 express')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have
@@ -87,7 +84,7 @@ describe('Properties', () => {
     it('it should return 404 after failed to updated specific property', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/100')
+        .patch('/api/v2/property/100')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           price: 1000
@@ -103,7 +100,7 @@ describe('Properties', () => {
     it('it should fails with errors if you dont meet required properties', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1')
+        .patch('/api/v2/property/1')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           prices: 1000
@@ -117,7 +114,7 @@ describe('Properties', () => {
     it('it should fails you try to update property which not yours', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1')
+        .patch('/api/v2/property/1')
         .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
         .send({
           price: 1000
@@ -130,7 +127,7 @@ describe('Properties', () => {
     it('it should return 200 after successfully updated specific property', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1')
+        .patch('/api/v2/property/1')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .send({
           price: 100
@@ -144,7 +141,7 @@ describe('Properties', () => {
     it('it should mark as sold specified property', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1/sold')
+        .patch('/api/v2/property/1/sold')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
@@ -160,7 +157,7 @@ describe('Properties', () => {
     it('it should 403 if you try to mark as sold property which not yours', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1/sold')
+        .patch('/api/v2/property/1/sold')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
         .end((err, res) => {
@@ -176,7 +173,7 @@ describe('Properties', () => {
     it('it should fails to mark property as sold if not available', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/100/sold')
+        .patch('/api/v2/property/100/sold')
         .set('content-type', 'application/json')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
@@ -197,7 +194,7 @@ describe('Properties', () => {
       sandBox.stub(uploader, 'upload').returns(cloudnaryRes);
       chai
         .request(app)
-        .post('/api/v1/property')
+        .post('/api/v2/property')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .attach('image', 'server/test/treva.png', 'treva.png')
         .field('price', '100')
@@ -247,7 +244,7 @@ describe('Properties', () => {
     it('it should return 403 when try to delete property which not yours', done => {
       chai
         .request(app)
-        .delete('/api/v1/property/1')
+        .delete('/api/v2/property/1')
         .set('Authorization', `Bearer ${utils.getUserToken(2)}`)
         .end((err, res) => {
           res.should.have.status(403);
@@ -262,7 +259,7 @@ describe('Properties', () => {
     it('it should return 200 status when delete operation was successful', done => {
       chai
         .request(app)
-        .delete('/api/v1/property/1')
+        .delete('/api/v2/property/1')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(200);
@@ -278,7 +275,7 @@ describe('Properties', () => {
     it('it should return 404 with error when deletion fails', done => {
       chai
         .request(app)
-        .delete('/api/v1/property/100')
+        .delete('/api/v2/property/100')
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(404);
