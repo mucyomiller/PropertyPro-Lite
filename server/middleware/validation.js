@@ -21,7 +21,6 @@ export const genericValidator = (req, res, schema, next) => {
 export class Validation {
   static updatePropertyValidator(req, res, next) {
     const schema = Joi.object().keys({
-      owner: Joi.number().integer(),
       price: Joi.number().min(0),
       state: Joi.string().min(2),
       city: Joi.string().min(2),
@@ -33,9 +32,6 @@ export class Validation {
 
   static addProperyValidator(req, res, next) {
     const schema = Joi.object().keys({
-      owner: Joi.number()
-        .integer()
-        .required(),
       price: Joi.number()
         .min(0)
         .required(),

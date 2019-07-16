@@ -190,6 +190,34 @@ describe('Properties', () => {
   describe('POST /', () => {
     it('it should return 201 and newly created property object', done => {
       // stripped down result from cloudinary
+      const cloudnaryRes = {
+        public_id: 'eneivicys42bq5f2jpn2',
+        url: 'https://res.cloudinary.com/mucyomiller/image/upload/v1562518550/apartment1_hemjm4.jpg'
+      };
+      sandBox.stub(uploader, 'upload').returns(cloudnaryRes);
+      chai
+        .request(app)
+        .post('/api/v1/property')
+        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
+        .attach('image', 'server/test/treva.png', 'treva.png')
+        .field('price', '100')
+        .field('state', 'Rwanda')
+        .field('city', 'Kigali')
+        .field('address', 'KK 1 st')
+        .field('type', '3 bedroom')
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.have
+            .property('data')
+            .have.property('image_url')
+            .eql(
+              'https://res.cloudinary.com/mucyomiller/image/upload/v1562518550/apartment1_hemjm4.jpg'
+            );
+          res.body.should.have
+            .property('data')
+            .have.property('address')
+            .eql('KK 1 st');
+        });
       done();
     });
   });
@@ -200,7 +228,6 @@ describe('Properties', () => {
       const req = httpMocks.createRequest();
       const res = httpMocks.createResponse();
       const schema = Joi.object().keys({
-        owner: Joi.number().integer(),
         price: Joi.number().min(0),
         state: Joi.string().min(2),
         city: Joi.string().min(2),
