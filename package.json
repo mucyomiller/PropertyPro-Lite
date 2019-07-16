@@ -11,7 +11,7 @@
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "heroku": "babel-node  server/index.js",
     "only-test": "mocha --inspect-brk server/test/property.js --require @babel/register --exit",
-    "db:init": "babel-node  server/database/db_init.js"
+    "database": "babel-node  server/database/db_init.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/mucyomiller/PropertyPro-Lite#readme",
   "dependencies": {
+    "@babel/runtime": "^7.5.4",
     "@hapi/joi": "^15.1.0",
     "bcrypt": "^3.0.6",
     "chai": "^4.2.0",
@@ -44,6 +45,8 @@
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.0",
     "@babel/node": "^7.5.0",
+    "@babel/plugin-transform-runtime": "^7.5.0",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.0",
     "@babel/register": "^7.4.4",
     "babel-eslint": "^10.0.2",
