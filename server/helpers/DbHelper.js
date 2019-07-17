@@ -1,5 +1,7 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
+import _ from 'lodash';
+import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 dotenv.config();
 
@@ -43,6 +45,30 @@ class DbHelper {
       return DbHelper.query(q, [value]);
     }
     return { error: 'provide table name & column & value', response: null };
+  }
+
+  static async insert(tablename, data) {
+    // let's build query
+    const q = `INSERT INTO ${tablename}`;
+    const queryBuilder = DbHelper.buildInsert(q, data);
+    return DbHelper.query(queryBuilder.sql, queryBuilder.values);
+  }
+
+  static buildInsert(query, data) {
+    const params = [];
+    const chunks = [];
+    const values = [];
+    const keys = [];
+    Object.keys(data).forEach(key => {
+      keys.push(key);
+      params.push(data[key]);
+      values.push(`$${params.length}`);
+    });
+    chunks.push(`(${values.join(', ')})`);
+    return {
+      sql: `${query}(${keys.join(', ')}) values${chunks.join(', ')} RETURNING *`,
+      values: params
+    };
   }
 }
 
