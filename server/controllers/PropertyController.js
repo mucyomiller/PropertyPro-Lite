@@ -18,14 +18,14 @@ cloudinary.config({
 const { response } = Respond;
 
 // db helpers  funcs
-const { queryAll, find } = DbHelper;
+const { queryAll, findOne } = DbHelper;
 
 class PropertyController {
   // view all properties
   static async viewAllProperties(req, res) {
     const { error, response: result } = await queryAll('properties');
     if (error) {
-      return response(res, 404, error, true);
+      return response(res, 500, error, true);
     }
     const { rows, rowCount } = result;
     if (rowCount > 0) {
@@ -37,9 +37,9 @@ class PropertyController {
   // view specific property
   static async viewPropertyById(req, res) {
     const { id } = req.params;
-    const { error, response: result } = await find('properties', 'id', parseInt(id, 10));
+    const { error, response: result } = await findOne('properties', 'id', parseInt(id, 10));
     if (error) {
-      return response(res, 200, error, true);
+      return response(res, 500, error, true);
     }
     const { rows, rowCount } = result;
     if (rowCount > 0) {

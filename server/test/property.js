@@ -8,6 +8,7 @@ import { uploader } from 'cloudinary';
 import app from '../index';
 import { genericValidator } from '../middleware/validation';
 import utils from './utils';
+import { initDB } from '../database/db_init';
 
 // create sinon sandbox
 const sandBox = sinon.createSandbox();
@@ -20,6 +21,9 @@ chai.should();
 const { expect, assert } = chai;
 
 describe('Properties', () => {
+  before(async () => {
+    await initDB();
+  });
   describe('GET /', () => {
     it('should return all properties listed', done => {
       chai

@@ -3,6 +3,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
 import users from '../model/users';
+import { initDB } from '../database/db_init';
 
 chai.use(chaiHttp);
 chai.should();
@@ -11,8 +12,11 @@ const { expect, assert } = chai;
 const [user1] = users;
 
 describe('Authentications', () => {
+  before(async () => {
+    await initDB();
+  });
   describe('SignUp', () => {
-    it('it should add user if needed properties provided', done => {
+    it('it should add user if required fields provided', done => {
       chai
         .request(app)
         .post('/api/v2/auth/signup')

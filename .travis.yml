@@ -9,7 +9,6 @@ services:
 
 before_script:
   - psql -c 'CREATE DATABASE propertyprolite;' -U postgres
-  - npm run database
 
 scripts: npm test
 

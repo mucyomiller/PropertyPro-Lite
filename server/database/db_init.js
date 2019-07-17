@@ -8,7 +8,8 @@ const { query } = DbHelper;
 const { dropUsersTable, dropPropertiesTable, createUsersTable, createPropertiesTable } = Queries;
 const { usersTableSeeder, propertiesTableSeeder } = Seeders;
 
-const initDB = async () => {
+// eslint-disable-next-line import/prefer-default-export
+export const initDB = async () => {
   await query(dropPropertiesTable);
   await query(dropUsersTable);
   await query(createUsersTable);
@@ -17,5 +18,4 @@ const initDB = async () => {
   await usersTableSeeder();
   await propertiesTableSeeder();
 };
-
 initDB();

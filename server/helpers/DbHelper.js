@@ -3,17 +3,18 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const { DB_URI } = process.env;
+const { DATABASE_URL } = process.env;
 
-const connectionString = DB_URI;
-const pool = new Pool({
+const connectionString = DATABASE_URL;
+export const pool = new Pool({
   connectionString
 });
-
 class DbHelper {
   static async query(query, params) {
     try {
-      const result = await pool.query(query, params);
+      const client = await pool.connect();
+      const result = await client.query(query, params);
+      client.release();
       return { error: null, response: result };
     } catch (Error) {
       return { error: Error, response: null };
