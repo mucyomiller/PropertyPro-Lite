@@ -1,13 +1,12 @@
 import Respond from '../helpers/ResponseHandler';
 import AuthHelper from '../helpers/AuthHelper';
-import users from '../model/users';
 import DbHelper from '../helpers/DbHelper';
 
 const { jwtSign, hashPassword, comparePassword } = AuthHelper;
 const { response } = Respond;
-const { findOne } = DbHelper;
+const { findOne, insert } = DbHelper;
 class AuthController {
-  static signUp(req, res) {
+  static async signUp(req, res) {
     // eslint-disable-next-line camelcase
     const { email, first_name, last_name, address, phone_number, password } = req.body;
     // hash password
@@ -21,8 +20,13 @@ class AuthController {
       password: hashedPassword,
       is_admin: false
     };
-    const { password: p, ...patchedUser } = user; // remove password from object
-    users.push(user);
+    const { error, response: result } = await insert('users', user);
+    if (error) {
+      // return 400 cause user can supply already exists email!.
+      return response(res, 400, error, true);
+    }
+    const [insertedUser] = result.rows;
+    const { password: p, ...patchedUser } = insertedUser;
     // generate token
     const token = jwtSign(patchedUser);
     const patchedUserWithToken = { token, ...patchedUser };
