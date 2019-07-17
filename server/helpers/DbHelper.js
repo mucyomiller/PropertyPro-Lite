@@ -1,7 +1,5 @@
 import { Pool } from 'pg';
 import dotenv from 'dotenv';
-import _ from 'lodash';
-import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 
 dotenv.config();
 

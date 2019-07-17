@@ -18,7 +18,7 @@ cloudinary.config({
 const { response } = Respond;
 
 // db helpers  funcs
-const { queryAll, findOne } = DbHelper;
+const { queryAll, findOne, insert } = DbHelper;
 
 class PropertyController {
   // view all properties
@@ -54,7 +54,7 @@ class PropertyController {
   static addNewProperty(req, res) {
     const { price, state, city, address, type } = req.body;
     const propertyImage = req.files.image.path;
-    cloudinary.uploader.upload(propertyImage, (result, error) => {
+    cloudinary.uploader.upload(propertyImage, async (result, error) => {
       if (error) {
         // return to stop further execution in this callback
         return response(res, 400, error, true);
@@ -66,13 +66,21 @@ class PropertyController {
         address,
         type,
         owner: req.user.id,
-        id: properties.length + 1,
         status: 'available',
         created_on: moment().format(),
         image_url: result.url
       };
-      properties.push(newProperty);
-      return response(res, 201, newProperty);
+      const { error: errors, response: resp } = await insert('properties', newProperty);
+      if (errors) {
+        // return 400 cause user can supply already exists email!.
+        return response(res, 400, errors, true);
+      }
+      const { rows, rowCount } = resp;
+      if (rowCount > 0) {
+        const [addedProperty] = rows;
+        return response(res, 201, addedProperty);
+      }
+      return response(res, 400, 'nothing inserted try again!', true);
     });
   }
 
