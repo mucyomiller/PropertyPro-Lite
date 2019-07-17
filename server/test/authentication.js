@@ -3,6 +3,7 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../index';
 import users from '../model/users';
+import { initDB } from '../database/db_init';
 
 chai.use(chaiHttp);
 chai.should();
@@ -11,11 +12,14 @@ const { expect, assert } = chai;
 const [user1] = users;
 
 describe('Authentications', () => {
+  before(async () => {
+    await initDB();
+  });
   describe('SignUp', () => {
-    it('it should add user if needed properties provided', done => {
+    it('it should add user if required fields provided', done => {
       chai
         .request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v2/auth/signup')
         .send({
           first_name: 'test',
           last_name: 'tester',
@@ -35,7 +39,7 @@ describe('Authentications', () => {
     it('it should return 400  when user fills bad inputs', done => {
       chai
         .request(app)
-        .post('/api/v1/auth/signup')
+        .post('/api/v2/auth/signup')
         .send({
           first_names: 'test'
         })
@@ -50,7 +54,7 @@ describe('Authentications', () => {
     it('it should sign in user if correct credentials provided', done => {
       chai
         .request(app)
-        .post('/api/v1/auth/signin')
+        .post('/api/v2/auth/signin')
         .send({
           email: user1.email,
           password: 'c00lssap'
@@ -63,12 +67,12 @@ describe('Authentications', () => {
           res.body.should.have.property('data').have.property('token');
           done();
         });
-    });
+    }).timeout(5000);
 
     it('it should return 400  when user fills bad inputs', done => {
       chai
         .request(app)
-        .post('/api/v1/auth/signin')
+        .post('/api/v2/auth/signin')
         .send({
           email: 'test@test.com',
           password: 'somebadpass'
@@ -85,7 +89,7 @@ describe('Authentications', () => {
     it('it should return 401 if missing jwt token on authenticated route', done => {
       chai
         .request(app)
-        .patch('/api/v1/property/1')
+        .patch('/api/v2/property/1')
         .send({
           price: 100
         })
@@ -99,7 +103,7 @@ describe('Authentications', () => {
       const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJ1c2VySWQiOjMsImlhdCI6MTU1Nzg3NzExNywiZXhwIjoxNTU3OTYzNTE3LCJhdWQiOiJodHRwczovL3lvdXJkb21haW4uY29tIiwiaXNzIjoiZmVhdGhlcnMiLCJzdWIiOiJhbm9ueW1vdXMiLCJqdGkiOiJkNDhjMDY1My01NDZjLTQ2N2EtYmU2Yi1iYmI2ZDgxNTc5NzcifQ.zlQIVtjBPC73AOUh_Gl1sCkNTS3SBonmoeSLzghHgok`;
       chai
         .request(app)
-        .patch('/api/v1/property/1')
+        .patch('/api/v2/property/1')
         .set('Authorization', `Bearer ${token}`)
         .send({
           price: 100

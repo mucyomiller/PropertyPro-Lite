@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import moment from 'moment';
 import properties from '../model/properties';
 import Respond from '../helpers/ResponseHandler';
+import DbHelper from '../helpers/DbHelper';
 
 dotenv.config();
 
@@ -15,18 +16,35 @@ cloudinary.config({
 });
 
 const { response } = Respond;
+
+// db helpers  funcs
+const { queryAll, findOne } = DbHelper;
+
 class PropertyController {
   // view all properties
-  static viewAllProperties(req, res) {
-    return response(res, 200, properties);
+  static async viewAllProperties(req, res) {
+    const { error, response: result } = await queryAll('properties');
+    if (error) {
+      return response(res, 500, error, true);
+    }
+    const { rows, rowCount } = result;
+    if (rowCount > 0) {
+      return response(res, 200, rows);
+    }
+    return response(res, 200, 'no properties found!');
   }
 
   // view specific property
-  static viewPropertyById(req, res) {
+  static async viewPropertyById(req, res) {
     const { id } = req.params;
-    const property = properties.find(item => item.id === parseInt(id, 10));
-    if (property) {
-      return response(res, 200, property);
+    const { error, response: result } = await findOne('properties', 'id', parseInt(id, 10));
+    if (error) {
+      return response(res, 500, error, true);
+    }
+    const { rows, rowCount } = result;
+    if (rowCount > 0) {
+      const [firstItem] = rows; // get first return item
+      return response(res, 200, firstItem);
     }
     return response(res, 404, 'No property found', true);
   }

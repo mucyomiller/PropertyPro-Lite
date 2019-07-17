@@ -19,7 +19,7 @@ const usersTableSeeder = async () => {
   // eslint-disable-next-line no-restricted-syntax
   for (const user of users) {
     // eslint-disable-next-line no-await-in-loop
-    const res = await query(usersTableSeedsQuery, [
+    await query(usersTableSeedsQuery, [
       user.email,
       user.first_name,
       user.last_name,
@@ -28,10 +28,6 @@ const usersTableSeeder = async () => {
       user.password,
       user.is_admin
     ]);
-    if (res.error) {
-      // eslint-disable-next-line no-console
-      console.log(`user seeder error occured! ${res.error}`);
-    }
   }
 };
 
@@ -39,7 +35,7 @@ const propertiesTableSeeder = async () => {
   // eslint-disable-next-line no-restricted-syntax
   for (const prop of properties) {
     // eslint-disable-next-line no-await-in-loop
-    const res = await query(propertiesTableSeedsQuery, [
+    await query(propertiesTableSeedsQuery, [
       prop.owner,
       prop.price,
       prop.state,
@@ -49,10 +45,6 @@ const propertiesTableSeeder = async () => {
       prop.image_url,
       prop.created_on
     ]);
-    if (res.error) {
-      // eslint-disable-next-line no-console
-      console.log(`property seeder error ${res.error} `);
-    }
   }
 };
 

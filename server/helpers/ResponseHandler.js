@@ -2,12 +2,12 @@ class Respond {
   static response(res, statusCode, data, error = false) {
     if (error) {
       return res.status(statusCode).json({
-        status: statusCode,
+        status: 'error',
         error: data
       });
     }
     return res.status(statusCode).json({
-      status: statusCode,
+      status: 'success',
       data
     });
   }

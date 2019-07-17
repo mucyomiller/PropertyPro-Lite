@@ -14,17 +14,17 @@ describe('API Entry Point', () => {
     it('it should return welcome message', done => {
       chai
         .request(app)
-        .get('/api/v1/')
+        .get('/api/v2/')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('message').eql('Welcome to PropertyPro-Lite API!');
+          res.body.should.have.property('message').eql('Welcome to PropertyPro-Lite API V2.0!');
         });
       done();
     });
     it('it should return 404 wiht specified message', done => {
       chai
         .request(app)
-        .get('/api/v1/notfound')
+        .get('/api/v2/notfound')
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.have.property('error').eql('Route Not Found!');

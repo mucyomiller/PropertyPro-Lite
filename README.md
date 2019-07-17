@@ -42,7 +42,7 @@ for linting do
 $ npm lint 
 ```
 ## API ENDPOINTS
-### *BASEURL : `/api/v1/`*
+### *BASEURL : `/api/v2/`*
 
 ### AUTHENTICATION END POINTS  : `/auth/`
 
@@ -58,7 +58,7 @@ HTTP METHOD | END POINT | AUTHENTICATED | DESCRIPTION
 GET | `/properties` | `False` | Get all Properties
 GET | `/property/:id` | `False` | Get  specified property by id
 GET | `/property?type=name` | `False` | Get propertyies by type
-POST | `/property` | `False` | Create a Property
+POST | `/property` | `True` | Create a Property
 PATCH | `/property/:id` | `True` | Update a Property
 PATCH | `/property/:id/sold` | `True` | Mark Property as Sold
 DELETE | `/property/:id` | `True` | Delete a Property
@@ -66,7 +66,7 @@ DELETE | `/property/:id` | `True` | Delete a Property
 
 ### Heroku
 The application API is hosted on this dyno URL:
-<a href="https://mucyo-property-pro-lite.herokuapp.com/api/v1"> https://mucyo-property-pro-lite.herokuapp.com/api/v1 </a>
+<a href="https://mucyo-property-pro-lite.herokuapp.com/api/v2"> https://mucyo-property-pro-lite.herokuapp.com/api/v2 </a>
 
 ### Github Pages 
 The application UI is hosted on this gh-pages URL:
