@@ -1,9 +1,11 @@
 import Respond from '../helpers/ResponseHandler';
 import AuthHelper from '../helpers/AuthHelper';
 import users from '../model/users';
+import DbHelper from '../helpers/DbHelper';
 
 const { jwtSign, hashPassword, comparePassword } = AuthHelper;
 const { response } = Respond;
+const { findOne } = DbHelper;
 class AuthController {
   static signUp(req, res) {
     // eslint-disable-next-line camelcase
@@ -27,12 +29,16 @@ class AuthController {
     return response(res, 201, patchedUserWithToken);
   }
 
-  // eslint-disable-next-line consistent-return
-  static signIn(req, res) {
+  static async signIn(req, res) {
     const { email, password: pass } = req.body;
-    const currentUser = users.find(user => user.email === email);
-    if (currentUser) {
+    const { error, response: result } = await findOne('users', 'email', email);
+    if (error) {
+      return response(res, 500, error, true);
+    }
+    const { rows, rowCount } = result;
+    if (rowCount > 0) {
       // compare password
+      const [currentUser] = rows;
       const checkPass = comparePassword(pass, currentUser.password);
       if (checkPass) {
         const { password, ...patchedUser } = currentUser;
