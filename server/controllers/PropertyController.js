@@ -18,7 +18,7 @@ cloudinary.config({
 const { response } = Respond;
 
 // db helpers  funcs
-const { queryAll, findOne, findAll, insert, deleteItem } = DbHelper;
+const { queryAll, findOne, findAll, insert, deleteItem, update } = DbHelper;
 
 class PropertyController {
   // view all properties
@@ -106,17 +106,27 @@ class PropertyController {
     return response(res, 404, 'no property found!', true);
   }
 
-  // eslint-disable-next-line consistent-return
-  static updateProperty(req, res) {
+  static async updateProperty(req, res) {
     const { id } = req.params;
-    const property = properties.find(item => item.id === parseInt(id, 10));
-    if (property) {
-      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
-        const datas = Object.keys(req.body);
-        datas.forEach(data => {
-          property[data] = req.body[data];
+    // retrieve property first
+    const { response: props } = await findOne('properties', 'id', parseInt(id, 10));
+    // check if we got anything
+    const { rows, rowCount } = props;
+    if (rowCount > 0) {
+      const [prop] = rows;
+      if (req.user.id === prop.owner || req.user.is_admin === true) {
+        const property = {};
+        const keys = Object.keys(req.body);
+        keys.forEach(key => {
+          property[key] = req.body[key];
         });
-        return response(res, 200, property);
+
+        const { response: result } = await update('properties', property, 'id', parseInt(id, 10));
+        const { rows: items, rowCount: counts } = result;
+        if (counts > 0) {
+          const [item] = items;
+          return response(res, 200, item);
+        }
       }
       return response(res, 403, { message: 'You are allowed to update your property only!' }, true);
     }
