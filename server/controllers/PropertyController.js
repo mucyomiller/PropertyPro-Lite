@@ -18,7 +18,7 @@ cloudinary.config({
 const { response } = Respond;
 
 // db helpers  funcs
-const { queryAll, findOne, findAll, insert } = DbHelper;
+const { queryAll, findOne, findAll, insert, deleteItem } = DbHelper;
 
 class PropertyController {
   // view all properties
@@ -84,15 +84,22 @@ class PropertyController {
     });
   }
 
-  static deleteProperty(req, res) {
+  static async deleteProperty(req, res) {
     const { id } = req.params;
-    const propertyIndex = properties.findIndex(item => item.id === parseInt(id, 10));
-    if (propertyIndex !== -1) {
-      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
-        properties.splice(propertyIndex, 1);
-        return response(res, 200, {
-          message: 'Property deleted successfully'
-        });
+    // retrieve property first
+    const { response: property } = await findOne('properties', 'id', parseInt(id, 10));
+    // check if we got anything
+    const { rows, rowCount } = property;
+    if (rowCount > 0) {
+      const [prop] = rows;
+      if (req.user.id === prop.owner || req.user.is_admin === true) {
+        const { error, response: result } = await deleteItem('properties', 'id', parseInt(id, 10));
+        if (!error) {
+          const { rowCount: count } = result;
+          if (count > 0) {
+            return response(res, 200, 'Property deleted successfully', false, true);
+          }
+        }
       }
       return response(res, 403, { message: 'You are allowed to delete your property only!' }, true);
     }
