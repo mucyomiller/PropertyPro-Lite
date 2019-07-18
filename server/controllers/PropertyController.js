@@ -18,7 +18,7 @@ cloudinary.config({
 const { response } = Respond;
 
 // db helpers  funcs
-const { queryAll, findOne, insert } = DbHelper;
+const { queryAll, findOne, findAll, insert } = DbHelper;
 
 class PropertyController {
   // view all properties
@@ -136,10 +136,11 @@ class PropertyController {
   }
 
   // view properties by type
-  static viewPropertiesByType(req, res) {
-    const propertiesResult = properties.filter(item => item.type === req.query.type);
-    if (propertiesResult.length > 0) {
-      return response(res, 200, propertiesResult);
+  static async viewPropertiesByType(req, res) {
+    const { response: result } = await findAll('properties', 'type', req.query.type.trim());
+    const { rows, rowCount } = result;
+    if (rowCount > 0) {
+      return response(res, 200, rows);
     }
     return response(res, 404, 'No available properties of such a type', true);
   }
