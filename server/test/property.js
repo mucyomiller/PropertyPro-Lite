@@ -268,7 +268,8 @@ describe('Properties', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property('status').eql('success');
-          res.body.should.have.property('data').be.a('object');
+          res.body.should.have.property('message').be.a('string');
+          res.body.should.have.property('message').eql('Property deleted successfully');
           done();
         });
     });
