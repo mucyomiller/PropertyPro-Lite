@@ -134,13 +134,22 @@ class PropertyController {
   }
 
   // mark property as sold
-  static markPropertyAsSold(req, res) {
+  static async markPropertyAsSold(req, res) {
     const { id } = req.params;
-    const property = properties.find(item => item.id === parseInt(id, 10));
-    if (property) {
-      if (req.user.id === parseInt(id, 10) || req.user.is_admin === true) {
-        property.status = 'sold';
-        return response(res, 200, property);
+    // retrieve property first
+    const { response: props } = await findOne('properties', 'id', parseInt(id, 10));
+    // check if we got anything
+    const { rows, rowCount } = props;
+    if (rowCount > 0) {
+      const [prop] = rows;
+      if (req.user.id === prop.owner || req.user.is_admin === true) {
+        const payload = { status: 'sold' };
+        const { response: result } = await update('properties', payload, 'id', parseInt(id, 10));
+        const { rows: items, rowCount: counts } = result;
+        if (counts > 0) {
+          const [item] = items;
+          return response(res, 200, item);
+        }
       }
       return response(
         res,
