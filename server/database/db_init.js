@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import DbHelper from '../helpers/DbHelper';
 import Queries from './queries';
 import Seeders from './seeds';
