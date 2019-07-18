@@ -29,7 +29,7 @@ class DbHelper {
     return { error: 'provide table name', response: null };
   }
 
-  static async find(tablename, column, value) {
+  static async findAll(tablename, column, value) {
     if (tablename && column && value) {
       const q = `SELECT * FROM ${tablename} WHERE ${column}=$1`;
       return DbHelper.query(q, [value]);
@@ -52,6 +52,14 @@ class DbHelper {
     return DbHelper.query(queryBuilder.sql, queryBuilder.values);
   }
 
+  static async deleteItem(tablename, key, value) {
+    if (tablename && key && value) {
+      const q = `DELETE FROM ${tablename} WHERE ${key}=$1`;
+      return DbHelper.query(q, [value]);
+    }
+    return { error: 'provide table name & column & value', response: null };
+  }
+
   static buildInsert(query, data) {
     const params = [];
     const chunks = [];
@@ -66,6 +74,26 @@ class DbHelper {
     return {
       sql: `${query}(${keys.join(', ')}) values${chunks.join(', ')} RETURNING *`,
       values: params
+    };
+  }
+
+  static async update(tablename, data, whereClause, condition) {
+    if (tablename && data && whereClause && condition) {
+      // let's build query
+      const q = `UPDATE ${tablename} SET `;
+      const { sql } = DbHelper.buildUpdate(q, data, whereClause, condition);
+      return DbHelper.query(sql);
+    }
+    return { error: 'provide table name & data & whereclause & condition', response: null };
+  }
+
+  static buildUpdate(query, data, whereClause, condition) {
+    const chunks = [];
+    Object.keys(data).forEach(key => {
+      chunks.push(`${key}='${data[key]}'`);
+    });
+    return {
+      sql: `${query} ${chunks.join(', ')} WHERE ${whereClause}=${condition} RETURNING *`
     };
   }
 }

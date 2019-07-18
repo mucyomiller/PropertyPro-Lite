@@ -267,11 +267,8 @@ describe('Properties', () => {
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.have.property('status').eql('success');
           res.body.should.have.property('data').be.a('object');
-          res.body.should.have
-            .property('data')
-            .have.property('message')
-            .be.a('string');
           done();
         });
     });
@@ -280,10 +277,11 @@ describe('Properties', () => {
       chai
         .request(app)
         .delete('/api/v2/property/100')
-        .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
+        .set('Authorization', `Bearer ${utils.getAdminToken()}`)
         .end((err, res) => {
-          res.should.have.status(404);
+          res.status.should.eql(404);
           res.body.should.have.property('error').be.a('string');
+          res.body.should.have.property('error').eql('no property found!');
           done();
         });
     });
