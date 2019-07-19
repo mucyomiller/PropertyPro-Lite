@@ -107,4 +107,16 @@ export class Validation {
     });
     genericValidator(req, res, schema, next);
   }
+
+  static passwordResetValidator(req, res, next) {
+    const schema = Joi.object().keys({
+      new_password: Joi.string()
+        .min(6)
+        .max(30),
+      password: Joi.string()
+        .min(6)
+        .max(30)
+    });
+    genericValidator(req, res, schema, next);
+  }
 }
