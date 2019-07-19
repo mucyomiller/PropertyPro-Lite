@@ -31,7 +31,7 @@ describe('Properties', () => {
         .get('/api/v2/properties')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('data').be.a('array');
+          res.body.should.have.property('data');
           done();
         });
     });
@@ -267,7 +267,7 @@ describe('Properties', () => {
         .set('Authorization', `Bearer ${utils.getUserToken(1)}`)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body.should.have.property('status').eql('success');
+          res.body.should.have.property('status').eql(200);
           res.body.should.have.property('message').be.a('string');
           res.body.should.have.property('message').eql('Property deleted successfully');
           done();
