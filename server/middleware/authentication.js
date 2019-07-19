@@ -16,7 +16,7 @@ class Authentication {
         req.user = user;
         return next();
       } catch (JsonWebTokenError) {
-        return response(res, 400, JsonWebTokenError, true);
+        return response(res, 400, 'Invalid signature or malformatted JWT token', true);
       }
     }
     return res.status(401).json({
