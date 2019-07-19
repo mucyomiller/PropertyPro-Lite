@@ -20,6 +20,14 @@ class AuthController {
       password: hashedPassword,
       is_admin: false
     };
+    // checks if email already exists!
+    const { error: failfirst, response: firstresult } = await findOne('users', 'email', user.email);
+    if (failfirst) {
+      return response(res, 500, 'Oops! unexpected things happened into server', true);
+    }
+    if (firstresult.rowCount > 0) {
+      return response(res, 409, 'there is already exists user with that email!', true);
+    }
     const { error, response: result } = await insert('users', user);
     if (error) {
       // return 400 cause user can supply already exists email!.
@@ -37,7 +45,7 @@ class AuthController {
     const { email, password: pass } = req.body;
     const { error, response: result } = await findOne('users', 'email', email);
     if (error) {
-      return response(res, 500, error, true);
+      return response(res, 500, 'Oops! unexpected things happened into server', true);
     }
     const { rows, rowCount } = result;
     if (rowCount > 0) {

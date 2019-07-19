@@ -36,6 +36,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "node-mocks-http": "^1.7.6",
+    "nodemailer": "^6.3.0",
     "pg": "^7.11.0",
     "sinon": "^7.3.2",
     "swagger-ui-express": "^4.0.7"

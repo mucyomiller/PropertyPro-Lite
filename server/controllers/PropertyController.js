@@ -1,7 +1,6 @@
 import cloudinary from 'cloudinary';
 import dotenv from 'dotenv';
 import moment from 'moment';
-import properties from '../model/properties';
 import Respond from '../helpers/ResponseHandler';
 import DbHelper from '../helpers/DbHelper';
 
@@ -25,13 +24,17 @@ class PropertyController {
   static async viewAllProperties(req, res) {
     const { error, response: result } = await queryAll('properties');
     if (error) {
-      return response(res, 500, error, true);
+      return response(res, 500, 'Oops! unexpected things happened into server', true);
     }
     const { rows, rowCount } = result;
     if (rowCount > 0) {
+      if (rowCount === 1) {
+        const [firstItem] = rows;
+        return response(res, 200, firstItem);
+      }
       return response(res, 200, rows);
     }
-    return response(res, 200, 'no properties found!');
+    return response(res, 404, 'no properties found!');
   }
 
   // view specific property
@@ -39,7 +42,7 @@ class PropertyController {
     const { id } = req.params;
     const { error, response: result } = await findOne('properties', 'id', parseInt(id, 10));
     if (error) {
-      return response(res, 500, error, true);
+      return response(res, 500, 'Oops! unexpected things happened into server', true);
     }
     const { rows, rowCount } = result;
     if (rowCount > 0) {
@@ -53,6 +56,9 @@ class PropertyController {
   // eslint-disable-next-line consistent-return
   static addNewProperty(req, res) {
     const { price, state, city, address, type } = req.body;
+    if (!req.files.image) {
+      return response(res, 400, 'image required', true);
+    }
     const propertyImage = req.files.image.path;
     cloudinary.uploader.upload(propertyImage, async (result, error) => {
       if (error) {
@@ -72,8 +78,7 @@ class PropertyController {
       };
       const { error: errors, response: resp } = await insert('properties', newProperty);
       if (errors) {
-        // return 400 cause user can supply already exists email!.
-        return response(res, 400, errors, true);
+        return response(res, 500, 'Oops! unexpected things happened into server', true);
       }
       const { rows, rowCount } = resp;
       if (rowCount > 0) {
@@ -100,6 +105,7 @@ class PropertyController {
             return response(res, 200, 'Property deleted successfully', false, true);
           }
         }
+        return response(res, 500, 'Oops! unexpected things happened into server', true);
       }
       return response(res, 403, { message: 'You are allowed to delete your property only!' }, true);
     }
@@ -121,7 +127,15 @@ class PropertyController {
           property[key] = req.body[key];
         });
 
-        const { response: result } = await update('properties', property, 'id', parseInt(id, 10));
+        const { error, response: result } = await update(
+          'properties',
+          property,
+          'id',
+          parseInt(id, 10)
+        );
+        if (error) {
+          return response(res, 500, 'Oops! unexpected things happened into server', true);
+        }
         const { rows: items, rowCount: counts } = result;
         if (counts > 0) {
           const [item] = items;
@@ -163,6 +177,9 @@ class PropertyController {
 
   // view properties by type
   static async viewPropertiesByType(req, res) {
+    if (!req.query.type) {
+      return response(res, 400, 'provide query params type', true);
+    }
     const { response: result } = await findAll('properties', 'type', req.query.type.trim());
     const { rows, rowCount } = result;
     if (rowCount > 0) {
